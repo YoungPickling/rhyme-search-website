@@ -1,0 +1,37 @@
+version: "1.0"
+services:
+  mongodb:
+    image: "mongo"
+    container_name: "mongodb"
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data
+    environment:
+      - "MONGO_INITDB_ROOT_USERNAME=averageuser"
+      - "MONGO_INITDB_ROOT_PASSWORD=CODE2687blink"
+#  mongo-express:
+#    image: "mongo-express"
+#    container_name: "mongo-express"
+#    restart: always
+#    ports:
+#      - 8081:8081
+#    environment:
+#      - "ME_CONFIG_MONGODB_ADMINUSERNAME=averageuser"
+#      - "ME_CONFIG_MONGODB_ADMINPASSWORD=CODE2687blink"
+#      - "ME_CONFIG_MONGODB_SERVER=mongodb"
+volumes:
+  data: {}
+networks:
+  default:
+    name: "mongodb_network"
+
+#services:
+#  mongodb:
+#    image: 'mongo:latest'
+#    environment:
+#      - 'MONGO_INITDB_DATABASE=mydatabase'
+#      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+#      - 'MONGO_INITDB_ROOT_USERNAME=root'
+#    ports:
+#      - '27017'

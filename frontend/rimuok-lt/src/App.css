@@ -41,4 +41,79 @@
   color: #888;
 } */
 
+:root {
+  --r_bg_color: #fff;
+  --r_color: #0fd;
+}
 
+body {
+  background-color: var(--r_bg_color);
+  min-height: 100vh;
+  min-width: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.r-bg {
+  display: block;
+  width: 100%;
+  position: absolute;
+}
+
+@keyframes openScene {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: scale(2000%,2000%);
+  }
+}
+
+.r-bg-circle {
+  border-radius: 50%;
+  margin: auto;
+  width: 100px;
+  height: 100px;
+  background: var(--r_color);
+  /* transition-property: transform;
+  transition-duration: ;
+  transition-timing-function: ease;
+  transition-delay: 0s; */
+  /* transition: transform 0.3; */
+  /* transform: translateY(0%,50px); */
+  /* transition: width 2s, height 4s; */
+  animation-name: openScene;
+  animation-duration: 3s;
+  animation-timing-function: ease-in;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+}
+
+
+
+.circleBase {
+    border-radius: 50%;
+}
+
+.type1 {
+    width: 100px;
+    height: 100px;
+    background: yellow;
+    border: 3px solid red;
+}
+.type2 {
+    width: 50px;
+    height: 50px;
+    background: #ccc;
+    border: 3px solid #000;
+}
+.type3 {
+    width: 500px;
+    height: 500px;
+    background: aqua;
+    border: 30px solid blue;
+}
