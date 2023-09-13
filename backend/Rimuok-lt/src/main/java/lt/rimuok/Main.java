@@ -4,10 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RimuokLtApplication {
+public class Main {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RimuokLtApplication.class, args);
+		System.out.println("Привет! ąčęėįšųū");
+		SpringApplication.run(Main.class, args);
 	}
 
 }
