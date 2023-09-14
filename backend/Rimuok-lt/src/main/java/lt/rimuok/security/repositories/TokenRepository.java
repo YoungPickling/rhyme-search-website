@@ -2,9 +2,10 @@ package lt.rimuok.security.repositories;
 
 import lt.rimuok.security.entities.Token;
 import lt.rimuok.security.entities.User;
-import lt.rimuok.security.services.TokenService;
+//import lt.rimuok.security.services.TokenService;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,16 +18,12 @@ import java.util.Optional;
  * @author Maksim Pavlenko
  */
 
+@Repository
 public interface TokenRepository extends MongoRepository<Token, String> {
-  @Query(value = """
-      select t from Token t inner join User u\s
-      on t.user.id = u.id\s
-      where u.id = :id and (t.expired = false or t.revoked = false)\s
-      """)
-  List<Token> findAllValidTokenByUser(String id);
+  List<Token> findAllByUser_IdAndExpiredFalseAndRevokedFalse(String id);
 
   Optional<Token> findByToken(String token);
 
-  @Query("SELECT t.user FROM Token t JOIN t.user u WHERE t.token = :token")
+  @Query(value = "{'token': ?0}", fields = "{'user': 1}")
   Optional<User> getUserByToken(String token);
 }

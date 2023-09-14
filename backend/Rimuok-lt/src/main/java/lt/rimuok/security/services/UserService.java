@@ -54,7 +54,7 @@ public class UserService {
      * @return The list of usernames.
      */
 
-    public List<String> getAllUsernames() { return repo.getAllUsernames(); }
+    public List<String> getAllUsernames() { return repo.findAllUsernames(); }
 
     /**
      * Retrieves a list of all users.

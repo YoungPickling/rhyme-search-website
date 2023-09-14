@@ -20,9 +20,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TokenService {
     private final TokenRepository repo;
-    {
-        System.out.println("Привет! ąčęėįšųū");
-    }
     /**
      * Retrieves the user associated with the given token.
      *
@@ -73,5 +70,5 @@ public class TokenService {
      * @return The list of valid tokens associated with the user.
      */
 
-    public List<Token> findAllValidTokenByUser(String id) {return repo.findAllValidTokenByUser(id); }
+    public List<Token> findAllValidTokenByUser(String id) {return repo.findAllByUser_IdAndExpiredFalseAndRevokedFalse(id); }
 }

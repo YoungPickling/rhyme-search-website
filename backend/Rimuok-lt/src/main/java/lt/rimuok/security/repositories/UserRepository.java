@@ -2,8 +2,8 @@ package lt.rimuok.security.repositories;
 
 import lt.rimuok.security.entities.User;
 import lt.rimuok.security.services.UserService;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,15 +23,12 @@ public interface UserRepository extends MongoRepository<User, String> {
 
 	Optional<User> findByEmail(String email);
 
-	@Query(value = "SELECT u FROM User u WHERE u.username = :username")
 	Optional<User> findByUsername(String username);
 
-	@Query("SELECT u.username FROM User u")
-	List<String> getAllUsernames();
+	@Query(value = "{}", fields = "{'username': 1}")
+	List<String> findAllUsernames();
 
-	@Query(value = "SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.email = :email")
 	boolean existsByEmail(String email);
 
-	@Query(value = "SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.username = :username")
 	boolean existsByUsername(String username);
 }
