@@ -23,12 +23,12 @@ import lt.rimuok.security.entities.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    @NotBlank(message = "Firstname is required")
-    @Size(min = 2, message = "Firstname is too short")
+//    @NotBlank(message = "Firstname is required")
+//    @Size(min = 2, message = "Firstname is too short")
     private String firstname;
 
-    @NotBlank(message = "Lastname is required")
-    @Size(min = 2, message = "Lastname is too short")
+//    @NotBlank(message = "Lastname is required")
+//    @Size(min = 2, message = "Lastname is too short")
     private String lastname;
 
     @NotBlank(message = "Username is required")

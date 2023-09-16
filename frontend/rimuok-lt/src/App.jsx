@@ -6,8 +6,8 @@ export default function App() {
 
   return (
     <>
-      <div class="r-bg">
-        <div class="r-bg-circle"></div>
+      <div className="r-bg">
+        <div className="r-bg-circle"></div>
       </div>
       {/* <div class="circleBase type1"></div>
       <div class="circleBase type2"></div><div class="circleBase type2"></div>

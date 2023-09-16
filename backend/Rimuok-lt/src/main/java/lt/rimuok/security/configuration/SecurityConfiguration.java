@@ -62,7 +62,7 @@ public class SecurityConfiguration {
                                 "/swagger-ui.html"
                         ).permitAll()
                         .requestMatchers("/user/").authenticated()
-                        .requestMatchers("/api/pizza/**").permitAll()
+                        //.requestMatchers("/api/pizza/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
