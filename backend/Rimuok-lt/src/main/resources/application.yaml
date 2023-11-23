@@ -1,0 +1,23 @@
+# ===============================
+#            DATABASE
+# ===============================
+spring:
+    datasource:
+        url: jdbc:postgresql://localhost:5432/lithuanian
+        username: postgres
+        password: maxim23
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        open-in-view: true
+        hibernate:
+            ddl-auto: none
+    output:
+        ansi:
+            enabled: ALWAYS
+
+# ===============================
+#            SERVER
+# ===============================
+server:
+    port: 8081
+
