@@ -1,4 +1,4 @@
-package lt.rimuok.dto;
+package lt.rimuok.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
