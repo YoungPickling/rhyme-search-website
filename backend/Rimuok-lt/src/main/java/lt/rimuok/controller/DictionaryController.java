@@ -1,29 +1,32 @@
 package lt.rimuok.controller;
 
 import lombok.RequiredArgsConstructor;
-import lt.rimuok.dto.JoinedTable;
-import lt.rimuok.repository.JunctionTableRepository;
+import lt.rimuok.model.SearchModel;
+import lt.rimuok.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
-@RequestMapping("/api/rest")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class DictionaryController {
     @Autowired
-    private JunctionTableRepository junctionTableRepository;
+    private SearchRepository searchRepository;
 
-    @GetMapping("/")
-    public List<JoinedTable> index(@RequestParam(name = "search") String search) {
+    private final String validationRegex = "^[a-pr-vyza-pr-vyzA-PR-VYZ]*$"; // "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž0-9_-]*$"
 
-        List<JoinedTable> response = junctionTableRepository.customQuery(search);
-        System.out.println("Привет");
+//    @GetMapping("/search/{word}")
+//    public List<SearchModel> getRhyme(@PathVariable String word) { //@RequestParam(name = "search") String search
+//        List<SearchModel> response = searchRepository.searchQuery(word, true);
+//        return response;
+//    }
+
+    @GetMapping("/search/{word}")
+    public List<SearchModel> getEndingRhyme(@PathVariable String word) {
+        List<SearchModel> response = searchRepository.searchQuery(word, true);
         return response;
     }
 

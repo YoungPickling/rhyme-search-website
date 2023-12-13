@@ -1,0 +1,164 @@
+/* * {
+  font-family: "Patrick Hand", "Patrick Hand SC", sans-serif;
+ } */
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color:#8a2be2;
+}
+
+.r_container {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.r_font {
+  /* font-family: "Patrick Hand",   sans-serif; */
+  font-family: inherit;
+}
+
+.r_devider {
+  min-height: 1em;
+  max-width: 99%;
+  min-width: 0;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.search_bar {
+  max-width: 70vw;
+  width: 20em;
+  margin-right: 0.3em;
+}
+
+.search_bar::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  background-color: black;
+}
+
+header {
+  max-width: 99%;
+  width: 40em;
+  margin: 0 auto;
+}
+
+main {
+  max-width: 100%;
+  width: 40em;
+  margin: 0.1em auto 0;
+  justify-content: center
+}
+
+main form {
+  max-width: 100vw;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;  
+  justify-content: center
+}
+
+.r_word_container {
+  display: flex;
+  height: 600px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+footer {
+  max-width: 45em;
+  width: auto;
+  margin: auto auto 0;
+  /* display:flex;
+  flex-direction: row;  
+  justify-content: center */
+}
+
+footer p {
+  color: #ff9;
+  text-shadow: 1px 1px #000,
+  -1px 1px #000,
+  1px -1px #000,
+  -1px -1px #000,
+  0px 1px #000,
+  0px -1px #000,
+  1px 0px #000,
+  -1px 0px #000;
+}
+
+@keyframes logoAnim {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.25) rotate(735deg);
+  }
+  100% {
+    transform: scale(1) rotate(720deg);
+  }
+}
+
+@keyframes logoTouch {
+  0% {
+    animation: 300ms ease-out 0s 1;
+  }
+  50% {
+    transform: rotate(35deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+#R, #I, #M, #U, #O, #K, #dot, #L, #T {
+  transform-origin: center center;
+  transform-box: fill-box;
+  /* transform: scale(0);  */
+}
+
+.wiggle {
+  animation: logoTouch 250ms ease-out 0s 1;
+}
+
+.logo_init {
+  animation: logoAnim 0.9s ease-out 1;
+}
+
+@media screen and (max-width: 1150px) {
+  .logo_block {
+    padding: 0 auto;
+  }
+}
+
+.r_card {
+  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 99vw;
+  min-width: 0;
+  margin: 0 auto;
+  /* height: ; */
+  color: rgba(33, 37, 41);
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 2px solid #333;
+}
+
+.r_card_body {
+  flex: 1 1 auto;
+  padding: 1rem;
+}
+
+details summary::-webkit-details-marker {
+  display:none;
+}
