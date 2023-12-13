@@ -1,17 +1,11 @@
 package lt.rimuok.repository;
 
-import lt.rimuok.mapper.AsonanceSearchModelRowMapper;
-import lt.rimuok.model.AsonanceSearchModel;
-import lt.rimuok.model.SearchModel;
-import lt.rimuok.Utils;
+import lt.rimuok.mapper.AssonanceSearchModelRowMapper;
+import lt.rimuok.model.AssonanceSearchModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -52,21 +46,28 @@ public class SearchRepository {
 //                }, search);
 //    }
 
-    public String tryGetRhymeIndex(final String word) {
+    public String getRhymeIndex(final String word) {
         return jdbcTemplate.queryForObject(
                 "SELECT m.rhyme_index FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai AS z USING(zodzio_id) WHERE zodis = ? LIMIT 1",
                 String.class,
                 word);
     }
 
-    public List<AsonanceSearchModel> searchAsonance(final String rhymeIndex) {
-        return jdbcTemplate.query("SELECT * FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE '%?' ORDER BY m.id",
-                new AsonanceSearchModelRowMapper(), rhymeIndex);
+    public List<AssonanceSearchModel> searchAssonance(final String rhymeIndex) {
+        System.out.println(rhymeIndex);
+        return jdbcTemplate.query(
+                "SELECT zodis,skiemenu_k,kircio_vieta,kircio_zenklas,kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? ORDER BY m.id",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex);
     }
 
-    public List<AsonanceSearchModel> searchAsonanceWithEnding(final String rhymeIndex, final int length, final String ending) {
-        return jdbcTemplate.query("SELECT * FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE '%?' AND RIGHT(zodis, ?) LIKE '%?' ORDER BY skiemenu_k",
-                new AsonanceSearchModelRowMapper(), rhymeIndex, length, ending);
+    public List<AssonanceSearchModel> searchAssonanceWithEnding(final String rhymeIndex, final int length, final String ending) {
+        return jdbcTemplate.query(
+                "SELECT * FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND RIGHT(zodis, ?) LIKE ? ORDER BY skiemenu_k",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex,
+                length,
+                "%" + ending);
     }
 
 //    (resultSet, rowNum) -> {
@@ -79,5 +80,4 @@ public class SearchRepository {
 //
 //        return result;
 //    }
-
 }

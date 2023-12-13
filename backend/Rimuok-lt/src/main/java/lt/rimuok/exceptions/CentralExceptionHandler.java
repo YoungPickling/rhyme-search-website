@@ -13,12 +13,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CentralExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EmptyRhymeIndexException.class)
-    public ResponseEntity<Object> handleRhymeIndexNotFound(Exception exception, WebRequest request) {
+    public ResponseEntity<Object> handleRhymeIndexNotFound(final Exception exception, final WebRequest request) {
         HttpStatus status = HttpStatus.PRECONDITION_FAILED; // Error 412
 
         return handleExceptionInternal(
                 exception,
                 new ErrorModel("no records", status.value()),
+                new HttpHeaders(),
+                status,
+                request);
+    }
+
+    @ExceptionHandler(InputValidationException.class)
+    public ResponseEntity<Object> handleInvalidInput(final Exception exception, final WebRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN; // Error 403
+
+        return handleExceptionInternal(
+                exception,
+                new ErrorModel("invalid characters", status.value()),
                 new HttpHeaders(),
                 status,
                 request);

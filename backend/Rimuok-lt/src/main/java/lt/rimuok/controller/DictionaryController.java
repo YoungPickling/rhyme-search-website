@@ -1,8 +1,10 @@
 package lt.rimuok.controller;
 
 import lombok.RequiredArgsConstructor;
-import lt.rimuok.model.SearchModel;
+import lt.rimuok.Utils;
+import lt.rimuok.model.AssonanceSearchModel;
 import lt.rimuok.repository.SearchRepository;
+import lt.rimuok.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,10 @@ public class DictionaryController {
     @Autowired
     private SearchRepository searchRepository;
 
-    private final String validationRegex = "^[a-pr-vyza-pr-vyzA-PR-VYZ]*$"; // "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž0-9_-]*$"
+    @Autowired
+    private SearchService searchService;
+
+     // "^[a-zA-ZĄąČčĘęĖėĮįŠšŲųŪūŽž0-9_-]*$"
 
 //    @GetMapping("/search/{word}")
 //    public List<SearchModel> getRhyme(@PathVariable String word) { //@RequestParam(name = "search") String search
@@ -24,10 +29,14 @@ public class DictionaryController {
 //        return response;
 //    }
 
-    @GetMapping("/search/{word}")
-    public List<SearchModel> getEndingRhyme(@PathVariable String word) {
-        List<SearchModel> response = searchRepository.searchQuery(word, true);
-        return response;
+    @GetMapping("/search/aso/{word}")
+    public List<AssonanceSearchModel> getAssonanceRhyme(@PathVariable String word) {
+        return searchService.searchAssonance(word);
+    }
+
+    @GetMapping("/search/end/{word}")
+    public List<AssonanceSearchModel> getEndingRhyme(@PathVariable String word) {
+        return searchService.searchAssonanceWithEnding(word);
     }
 
 }
