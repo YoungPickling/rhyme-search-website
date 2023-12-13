@@ -161,7 +161,7 @@ export default function Home() {
           <div className="r_card_body">
             <h6 className="card-subtitle mb-2 text-muted">rasta 839</h6>
             <h4 className="card-title">1 skiemuo</h4>
-            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card`&apos;`s content.</p>
             {/* <div className="r_word_container">
 
             </div> */}

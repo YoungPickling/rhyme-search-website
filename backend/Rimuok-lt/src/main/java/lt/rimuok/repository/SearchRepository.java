@@ -1,8 +1,10 @@
 package lt.rimuok.repository;
 
 import lt.rimuok.mapper.AssonanceSearchModelRowMapper;
-import lt.rimuok.model.AssonanceSearchModel;
+import lt.rimuok.model.WordModel;
+import lt.rimuok.model.SyllableCountModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -46,38 +48,98 @@ public class SearchRepository {
 //                }, search);
 //    }
 
-    public String getRhymeIndex(final String word) {
+    public String getRhymeIndex(final String word) throws EmptyResultDataAccessException {
         return jdbcTemplate.queryForObject(
                 "SELECT m.rhyme_index FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai AS z USING(zodzio_id) WHERE zodis = ? LIMIT 1",
                 String.class,
                 word);
     }
 
-    public List<AssonanceSearchModel> searchAssonance(final String rhymeIndex) {
-        System.out.println(rhymeIndex);
+    public List<SyllableCountModel> syllableCountTable(final String rhymeIndex) {
         return jdbcTemplate.query(
-                "SELECT zodis,skiemenu_k,kircio_vieta,kircio_zenklas,kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? ORDER BY m.id",
+                "SELECT DISTINCT ON (skiemenu_k) skiemenu_k, COUNT(*) OVER (PARTITION BY skiemenu_k) AS row_count FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE '%Ai' ORDER BY skiemenu_k, row_count",
+                (resultSet, rowNum) ->
+                    new SyllableCountModel(resultSet.getInt("skiemenu_k"), resultSet.getInt("row_count")),
+                "%" + rhymeIndex);
+    }
+
+    public List<WordModel> searchAssonance(final String rhymeIndex) {
+        return jdbcTemplate.query(
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk <= 100",
                 new AssonanceSearchModelRowMapper(),
                 "%" + rhymeIndex);
     }
 
-    public List<AssonanceSearchModel> searchAssonanceWithEnding(final String rhymeIndex, final int length, final String ending) {
+    public List<WordModel> searchAssonancePage(final String rhymeIndex, final int syllableCount, final int from, final int to) {
         return jdbcTemplate.query(
-                "SELECT * FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND RIGHT(zodis, ?) LIKE ? ORDER BY skiemenu_k",
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND skiemenu_k = ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk > ? AND rnk <= ?",
                 new AssonanceSearchModelRowMapper(),
                 "%" + rhymeIndex,
-                length,
+                syllableCount,
+                from,
+                to);
+    }
+
+    public List<WordModel> filteredAssonance(final String rhymeIndex, final int partOfSpeech) {
+        return jdbcTemplate.query(
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND kalbos_dalies_id = ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk <= 100",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex,
+                partOfSpeech);
+    }
+
+    public List<WordModel> filteredAssonancePage(final String rhymeIndex, final int partOfSpeech, final int syllableCount, final int from, final int to) {
+        return jdbcTemplate.query(
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND kalbos_dalies_id = ? AND skiemenu_k = ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk > ? AND rnk <= ?",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex,
+                partOfSpeech,
+                syllableCount,
+                from,
+                to);
+    }
+
+    public List<WordModel> searchEnding(final String rhymeIndex, final String ending) {
+        return jdbcTemplate.query(
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND RIGHT(zodis, ?) LIKE ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk <= 100",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex,
+                ending.length(),
                 "%" + ending);
     }
 
-//    (resultSet, rowNum) -> {
-//        AsonanceSearchModel result = new AsonanceSearchModel();
-//        result.setWo(resultSet.getString("zodis"));
-//        result.setSy(resultSet.getInt("skiemenu_k"));
-//        result.setSa(resultSet.getInt("kircio_vieta"));
-//        result.setSt(resultSet.getInt("kircio_zenklas"));
-//        result.setPs(resultSet.getInt("kalbos_dalies_id"));
-//
-//        return result;
-//    }
+    public List<WordModel> searchEndingPage(final String rhymeIndex, final String ending, final int syllableCount, final int from, final int to) {
+        return jdbcTemplate.query(
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND RIGHT(zodis, ?) LIKE ? AND skiemenu_k = ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk > ? AND rnk <= ?",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex,
+                ending.length(),
+                ending,
+                syllableCount,
+                from,
+                to);
+    }
+
+    public List<WordModel> filteredEnding(final String rhymeIndex, final int partOfSpeech, final String ending) {
+        return jdbcTemplate.query(
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND kalbos_dalies_id = ? AND RIGHT(zodis, ?) LIKE ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk <= 100",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex,
+                partOfSpeech,
+                ending.length(),
+                "%" + ending);
+    }
+
+    public List<WordModel> filteredEndingPage(final String rhymeIndex, final int partOfSpeech, final String ending, final int syllableCount, final int from, final int to) {
+        return jdbcTemplate.query(
+                "WITH list AS( SELECT DISTINCT ON (zodis,skiemenu_k) m.zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? AND kalbos_dalies_id = ? AND RIGHT(zodis, ?) LIKE ? AND skiemenu_k = ? ORDER BY skiemenu_k), filtered AS ( SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id, ROW_NUMBER() OVER (PARTITION BY skiemenu_k ORDER BY zodzio_id) AS rnk FROM list ) SELECT zodzio_id, zodis, skiemenu_k, kircio_vieta, kircio_zenklas, kalbos_dalies_id FROM filtered WHERE rnk > ? AND rnk <= ?",
+                new AssonanceSearchModelRowMapper(),
+                "%" + rhymeIndex,
+                partOfSpeech,
+                ending.length(),
+                ending,
+                syllableCount,
+                from,
+                to);
+    }
 }

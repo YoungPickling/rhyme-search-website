@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AssonanceSearchModel {
+public class WordModel {
     private String wo; // word
     private int sy; // syllables
     private int sa; // stress at

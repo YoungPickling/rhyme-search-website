@@ -92,4 +92,14 @@ public class Utils {
         return -1; // No consonant found
     }
 
+    public static int findLastCapital(final String rhymeIndex) {
+        // Find the index of the last vowel in the word
+        for (int i = rhymeIndex.length() - 1; i >= 0; i--) {
+            if (Character.isUpperCase(rhymeIndex.charAt(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }
