@@ -52,9 +52,8 @@ header {
 }
 
 main {
-  max-width: 100%;
-  width: 40em;
-  margin: 0.1em auto 0;
+  width: 90vw;
+  margin: 0.1em auto 10vw;
   justify-content: center
 }
 
@@ -121,7 +120,6 @@ footer p {
 #R, #I, #M, #U, #O, #K, #dot, #L, #T {
   transform-origin: center center;
   transform-box: fill-box;
-  /* transform: scale(0);  */
 }
 
 .wiggle {
@@ -132,11 +130,7 @@ footer p {
   animation: logoAnim 0.9s ease-out 1;
 }
 
-@media screen and (max-width: 1150px) {
-  .logo_block {
-    padding: 0 auto;
-  }
-}
+
 
 .r_card {
   border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
@@ -146,7 +140,6 @@ footer p {
   max-width: 99vw;
   min-width: 0;
   margin: 0 auto;
-  /* height: ; */
   color: rgba(33, 37, 41);
   word-wrap: break-word;
   background-color: #fff;
@@ -159,6 +152,35 @@ footer p {
   padding: 1rem;
 }
 
+.r_rhyme_box {
+  font-size: 1.5rem !important;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.r_rhyme_box div {
+  box-sizing: border-box;
+  font-size: 1.1em;
+  padding: 0.3em 0;
+  max-width: 14.3rem;
+  width: 9.3rem;
+}
+
 details summary::-webkit-details-marker {
   display:none;
+}
+
+@media screen and (max-width: 900px) {
+  .logo_block {
+    padding: 0 auto;
+  }
+  main {
+    width: 100%;
+  }
+  .r_rhyme_box div {
+    width: 7rem;
+  }
 }

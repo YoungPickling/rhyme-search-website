@@ -21,16 +21,16 @@ export default function RootLayout({
 }) {  
   return (
     <html lang="lt">
-      <body className={patrickHand.className}>
-        <div className="r_container">
-          {children}
-        </div>
-      </body>
       <Script 
         type="text/javascript" 
         src="./logoScript.js" 
         strategy="afterInteractive"
         />
+      <body className={patrickHand.className}>
+        <div className="r_container">
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

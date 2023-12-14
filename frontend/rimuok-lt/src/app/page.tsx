@@ -113,9 +113,10 @@ export default function Home() {
     const value = inputRef.current
     if(value === "" ) return
 
-    fetch(`http://localhost:8081/api/search/${searchInput}`)
+    fetch(`http://localhost:8081/api/search/aso/${searchInput}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setSearchResults(data);
       })
       .catch((error) => {
@@ -161,7 +162,23 @@ export default function Home() {
           <div className="r_card_body">
             <h6 className="card-subtitle mb-2 text-muted">rasta 839</h6>
             <h4 className="card-title">1 skiemuo</h4>
-            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card`&apos;`s content.</p>
+
+            <div className="r_rhyme_box">
+              <div>agni</div>
+              <div>aidi</div>
+              <div>aidim</div>
+              <div>aidit</div>
+              <div>aiksi</div>
+              <div>aiksit</div>
+              <div>aikštį</div>
+              <div>aikštims</div>
+              <div>aikštis</div>
+              <div>aikštys</div>
+              <div>aini</div>
+              <div>ainį</div>
+            </div>
+
+
             {/* <div className="r_word_container">
 
             </div> */}
