@@ -3,44 +3,36 @@ import RimuokLogo from "@/components/RimuokLogo"
 import React, { useState, FormEvent, useEffect, useRef  } from "react"
 import Image from "next/image"
 import { useRouter, useSearchParams } from "next/navigation"
+import { Base64 } from "js-base64";
 
-interface ResultElement{
-  word: string,
-  distance: number,
-  syllables: number,
-  kdId: number,
-  stress_at: number | null,
-  stress_type: number | null
+interface CountModel {
+  sc: number;
+  rc: number;
 }
 
-// async function getSearchResults(searchWord: string | null): Promise<string> {
-//   const settings = {
-//     method: "GET",
-//     headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//     }
-//   }
+interface WordModel {
+  wo: string;
+  sy: number;
+  sa: number;
+  st: number;
+  ps: number;
+}
 
-//   try {
-//     const searchQuery = await fetch("http://localhost:8081/api/search/" + searchWord, settings).then((res) => res.json)
-    
-//     if (!searchQuery.ok) {
-//       throw new Error(`Search request failed with status: ${searchQuery.status}`)
-//     }
-
-//     const response =  await searchQuery.json()
-//       // console.log(response) 
-//     return String(response)
-//   } catch (e) {
-//     console.log(e)
-//     return String(e);
-//   }    
-// }
+interface JsonResponse {
+  in: string;
+  co: CountModel[];
+  res: WordModel[][];
+}
 
 export default function Home() {
-  const [searchInput, setSearchInput] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const stressSigns = ["","̀","́","̃"];
+
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [showMoreButtons, setShowMoreButtons] = useState([]);
+
+  const [rhymeIndex, setRhymeIndex] = useState<string>("");
+  const [totalResults, setTotalResults] = useState<number>(0);
+  const [searchResults, setSearchResults] = useState<JsonResponse>({ in: "", co: [], res: [] });
 
   const router = useRouter()
   const [inputBar, setInputBar] = useState("")
@@ -50,14 +42,34 @@ export default function Home() {
   const inputRef = useRef<string>()
 
   const searchParams = useSearchParams()
-  const queryWord = searchParams.get("q")
+  let queryWordBuffer = searchParams.get("q") || ""
+  const queryWord = Base64.decode(queryWordBuffer)
 
-  // useEffect(() => {
-  //   if(queryWord) { 
-  //     const query = getSearchResults(queryWord)
-  //     searchResult = query
-  //   }
-  // }, []);
+  useEffect(() => {
+    if(queryWord != null) {
+      setSearchInput(queryWord);
+    }
+  }, [])
+
+  useEffect(() => {
+    if(searchResults && searchResults.co && searchResults.co.length !== 0) {
+      let sum = 0
+      searchResults.co.forEach((el) => {
+        sum = sum + el.rc
+      });
+      setTotalResults(sum)
+    }
+  }, [searchResults])
+
+  useEffect(() => {
+    // Check if the conditions are met to show the buttons
+    const newShowFetchButtons = searchResults.res.map((syllableGroup) => {
+      const rcSum = syllableGroup.reduce((sum, word) => sum + word.rc, 0);
+      return rcSum >= 100;
+    });
+  
+    setShowMoreButtons(newShowFetchButtons);
+  }, [searchResults]);
 
   const initialSections = Array.from({ length: 3 }, (_, index) => ({
     showMore: false,
@@ -85,7 +97,8 @@ export default function Home() {
     //   btnText.innerHTML = "...rodyti mažiau"; 
     //   moreText.style.display = "inline";
     // }
-    console.log("spoiler  ")
+
+    console.log("spoiler")
     if (typeof document === 'undefined') {
       // Do something appropriate when running in a non-browser environment
       console.log("hmm")
@@ -110,27 +123,55 @@ export default function Home() {
   const handleSearch = (e:any) => {
     e.preventDefault();
 
-    const value = inputRef.current
-    if(value === "" ) return
+    const value = inputRef.current as string;
+    if(value === "") return
+
+    setIsLoading(true);
 
     fetch(`http://localhost:8081/api/search/aso/${searchInput}`)
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then((data) => {       
+        setRhymeIndex(data.in)
         setSearchResults(data);
+        // console.log(data);
+
+        router.push("/?q=" + Base64.encode(searchInput));
       })
       .catch((error) => {
         console.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-
-    router.push("/?q=" + searchInput);
-      // const query = getSearchResults(inputBar)
-      // inputBar = query
-      // console.log(query)
   }
 
+  const handleShowMoreButton = (index) => {
+    // Implement the logic to fetch data when the button is clicked
+    // You can use fetch() or any other method here
+    // After fetching, you may update the state or perform any other necessary actions
+  };
+
+  // const handleContinue = (e:any) => {
+  //   e.preventDefault();
+
+  //   fetch(`http://localhost:8081/api/search/aso/${searchInput}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {       
+  //       setRhymeIndex(data.in)
+        
+  //       setSearchResults(data);
+  //       console.log(data);
+
+  //       router.push("/?q=" + Base64.encode(searchInput));
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+
+  // }
+
   const handleChange = (e: any) => {
-    setSearchInput(e.target.value);
+      setSearchInput(e.target.value);
   };
 
   return (
@@ -156,37 +197,47 @@ export default function Home() {
             </button>
           </div>
         </form>
+
         <div className="r_devider">
         </div>
+
+        { isLoading ? (
+          <div className="r_loading">
+            <h1>Kraunasi...</h1>
+          </div>
+        ) : 
+
+        searchResults.res.length === 0 ?
+        (<></>) : (
+        
         <div className="r_card">
           <div className="r_card_body">
-            <h6 className="card-subtitle mb-2 text-muted">rasta 839</h6>
-            <h4 className="card-title">1 skiemuo</h4>
+            <h6 className="card-subtitle mb-2 text-muted">rasta {totalResults}</h6>
 
-            <div className="r_rhyme_box">
-              <div>agni</div>
-              <div>aidi</div>
-              <div>aidim</div>
-              <div>aidit</div>
-              <div>aiksi</div>
-              <div>aiksit</div>
-              <div>aikštį</div>
-              <div>aikštims</div>
-              <div>aikštis</div>
-              <div>aikštys</div>
-              <div>aini</div>
-              <div>ainį</div>
-            </div>
-
-
-            {/* <div className="r_word_container">
-
-            </div> */}
-            {/* <a href="#" className="card-link">Card link</a> */}
-
-            {/* <span id={"more" + 1} style={{display:"none"}}><p>erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.</p></span>
-            <button onChange={() => spoiler(1)} id={"myBtn" + 1}>...rodyti daugiau</button> */}
-            {sections.map((section) => (
+            {searchResults.res.map((syllableGroup, index) => (
+              <div key={index}>
+                <h2 className="card-title">
+                  {syllableGroup[0].sy === 1
+                  ? '1 skiemuo'
+                  : syllableGroup[0].sy >= 2 && syllableGroup[0].sy <= 9
+                  ? `${syllableGroup[0].sy} skiemenys`
+                  : `${syllableGroup[0].sy} sliemenų`}
+                </h2>
+                
+                <div className="r_rhyme_box">
+                  {syllableGroup.map((word, wordIndex) => (
+                    <div key={wordIndex}>{word.wo.slice(0, word.sa - 1)}<b>{word.wo.slice(word.sa - 1, word.sa) + stressSigns[word.st]}</b>{word.wo.slice(word.sa)}</div>
+                  ))}
+                </div>
+                 <div className=" r_devider"> {/* r_rhyme_box_devider */}
+                  {showMoreButtons[index] && (
+                    <button onClick={() => handleShowMoreButton(syllableGroup[0].sy)}>rodyti daugiau</button>
+                  )}
+                </div>
+              </div>
+            ))}
+            
+            {/* {sections.map((section) => (
               <div key={section.id}>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -202,26 +253,30 @@ export default function Home() {
                   </u>
                 </div>  
               </div>
-            ))}
-            {/* <details>
-              <summary>
+            ))} */}
+
+
+            {/* {sections.map((section) => (
+              <div key={section.id}>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                {section.showMore && (
+                  <p>
+                    Additional content for section {section.id}.
+                  </p>
+                )}
                 <div className="r_devider">
-                  <u>...rodyti daugiau</u>
-                </div>
-              </summary>
-              <p>Epcot is a theme park at Walt Disney World Resort featuring exciting attractions, international pavilions, award-winning fireworks and seasonal special events.</p>
-            </details> */}
+                  <u onClick={() => toggleShowMore(section.id)} style={{cursor:"pointer"}}>
+                    {section.showMore ? "...rodyti mažiau" : "...rodyti daugiau"}
+                  </u>
+                </div>  
+              </div>
+            ))} */}
+            
           </div>
         </div>
-        {/* {searchResults.map((result: any) => (
-          <li key={result.kdId}>
-            <p>Word: {result.word}</p>
-            <p>Distance: {result.distance}</p>
-            <p>Syllables: {result.syllables}</p>
-            <p>Stress At: {result.stress_at}</p>
-            <p>Stress Type: {result.stress_type}</p>
-          </li>
-        ))} */}
+      )}
       </main>
       <footer>
         <p>© 2023 visos teisės saugomos</p>

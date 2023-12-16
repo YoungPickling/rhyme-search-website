@@ -1,5 +1,6 @@
 package lt.rimuok.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,9 +11,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WordModel {
-    private String wo; // word
-    private int sy; // syllables
-    private int sa; // stress at
-    private int st; // st
-    private int ps; // part of speech
+    @JsonProperty("wo")
+    private String word;
+
+    @JsonProperty("sy")
+    private int syllable;
+
+    @JsonProperty("sa")
+    private int stressAt;
+
+    @JsonProperty("st")
+    private int stressType;
+
+    @JsonProperty("ps")
+    private int partOfSpeech;
 }

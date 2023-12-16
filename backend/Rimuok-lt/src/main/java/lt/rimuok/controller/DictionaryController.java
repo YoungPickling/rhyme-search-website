@@ -1,6 +1,7 @@
 package lt.rimuok.controller;
 
 import lombok.RequiredArgsConstructor;
+import lt.rimuok.model.InitialInfoModel;
 import lt.rimuok.model.WordModel;
 import lt.rimuok.repository.SearchRepository;
 import lt.rimuok.service.SearchService;
@@ -15,13 +16,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DictionaryController {
     @Autowired
-    private SearchRepository searchRepository;
-
-    @Autowired
     private SearchService searchService;
 
     @GetMapping("/search/aso/{word}")
-    public List<WordModel> getAssonanceRhyme(@PathVariable String word) {
+    public InitialInfoModel getAssonanceRhyme(@PathVariable String word) {
         return searchService.searchAssonance(word);
     }
 
@@ -31,7 +29,7 @@ public class DictionaryController {
     }
 
     @GetMapping("/search/asof/{word}/{pfs}") // pfs - part of speech
-    public List<WordModel> filterAssonanceRhyme(@PathVariable String word, @PathVariable int pfs) {
+    public InitialInfoModel filterAssonanceRhyme(@PathVariable String word, @PathVariable int pfs) {
         return searchService.filteredAssonance(word, pfs);
     }
 
@@ -41,7 +39,7 @@ public class DictionaryController {
     }
 
     @GetMapping("/search/end/{word}")
-    public List<WordModel> getEndingRhyme(@PathVariable String word) {
+    public InitialInfoModel getEndingRhyme(@PathVariable String word) {
         return searchService.searchEnding(word);
     }
 
@@ -51,7 +49,7 @@ public class DictionaryController {
     }
 
     @GetMapping("/search/endf/{word}/{pfs}")
-    public List<WordModel> filterEndingRhyme(@PathVariable String word, @PathVariable int pfs) {
+    public InitialInfoModel filterEndingRhyme(@PathVariable String word, @PathVariable int pfs) {
         return searchService.filteredEnding(word, pfs);
     }
 
