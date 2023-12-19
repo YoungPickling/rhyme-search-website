@@ -35,12 +35,17 @@ public class SearchService {
             rhymeIndex = searchRepository.getRhymeIndex(word);
             resultCount = searchRepository.syllableCountTable(rhymeIndex, null);
         } catch(EmptyResultDataAccessException e) {
-            throw new EmptyRhymeIndexException("no index found");
+            throw new EmptyRhymeIndexException("no index found", word);
         }
 
         rhymeIndex = rhymeIndex.substring(Utils.findLastCapital(rhymeIndex));
         List<WordModel> results = searchRepository.searchAssonance(rhymeIndex);
-        return new InitialInfoModel(rhymeIndex, resultCount, Utils.groupBySyllable(results));
+        return new InitialInfoModel(rhymeIndex,
+                Utils.getVowelIndexes(word),
+                Utils.getAllRhymeIndexes(Utils.extractVowelGroups(word)),
+                Utils.getEnding(word),
+                resultCount,
+                Utils.groupBySyllable(results));
     }
 
     public List<WordModel> searchAssonancePage(final String index, final int syllableCount, final int page) {
@@ -68,13 +73,18 @@ public class SearchService {
             rhymeIndex = searchRepository.getRhymeIndex(word);
             resultCount = searchRepository.syllableCountTable(rhymeIndex, null);
         } catch(EmptyResultDataAccessException e) {
-            throw new EmptyRhymeIndexException("no index found");
+            throw new EmptyRhymeIndexException("no index found", word);
         }
 
         rhymeIndex = rhymeIndex.substring(Utils.findLastCapital(rhymeIndex));
 
         List<WordModel> results = searchRepository.filteredAssonance(rhymeIndex, partOfSpeech);
-        return new InitialInfoModel(rhymeIndex, resultCount, Utils.groupBySyllable(results));
+        return new InitialInfoModel(rhymeIndex,
+                Utils.getVowelIndexes(word),
+                Utils.getAllRhymeIndexes(Utils.extractVowelGroups(word)),
+                Utils.getEnding(word),
+                resultCount,
+                Utils.groupBySyllable(results));
     }
 
     public List<WordModel> filteredAssonancePage(final String index, final int partOfSpeech, final int syllableCount, final int page) {
@@ -103,12 +113,17 @@ public class SearchService {
             rhymeIndex = searchRepository.getRhymeIndex(word);
             resultCount = searchRepository.syllableCountTable(rhymeIndex, null);
         } catch(EmptyResultDataAccessException e) {
-            throw new EmptyRhymeIndexException("no index found");
+            throw new EmptyRhymeIndexException("no index found", word);
         }
 
         String ending = Utils.getEnding(word);
         List<WordModel> results = searchRepository.searchEnding(rhymeIndex, ending);
-        return new InitialInfoModel(rhymeIndex, resultCount, Utils.groupBySyllable(results));
+        return new InitialInfoModel(rhymeIndex,
+                Utils.getVowelIndexes(word),
+                Utils.getAllRhymeIndexes(Utils.extractVowelGroups(word)),
+                Utils.getEnding(word),
+                resultCount,
+                Utils.groupBySyllable(results));
     }
 
     public List<WordModel> searchEndingPage(final String index, final String ending, final int syllableCount, final int page) {
@@ -137,12 +152,17 @@ public class SearchService {
             rhymeIndex = searchRepository.getRhymeIndex(word);
             resultCount = searchRepository.syllableCountTable(rhymeIndex, null);
         } catch(EmptyResultDataAccessException e) {
-            throw new EmptyRhymeIndexException("no index found");
+            throw new EmptyRhymeIndexException("no index found", word);
         }
 
         String ending = Utils.getEnding(word);
         List<WordModel> results = searchRepository.filteredEnding(rhymeIndex, partOfSpeech, ending);
-        return new InitialInfoModel(rhymeIndex, resultCount, Utils.groupBySyllable(results));
+        return new InitialInfoModel(rhymeIndex,
+                Utils.getVowelIndexes(word),
+                Utils.getAllRhymeIndexes(Utils.extractVowelGroups(word)),
+                Utils.getEnding(word),
+                resultCount,
+                Utils.groupBySyllable(results));
     }
 
     public List<WordModel> filteredEndingPage(final String index, final int partOfSpeech, final String ending, final int syllableCount, final int page) {
