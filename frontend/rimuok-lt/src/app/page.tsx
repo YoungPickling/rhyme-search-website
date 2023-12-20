@@ -20,9 +20,17 @@ type WordModel = {
 
 type JsonResponse = {
   in: string;
+  va: number[];
+  rv: string[];
   end: string;
   co: CountModel[];
   res: WordModel[][];
+}
+
+type SuggestionResponse = {
+  vowelAt: number[];
+  indexes: string[];
+  end: string;
 }
 
 type ErrorMessage = {
@@ -30,15 +38,13 @@ type ErrorMessage = {
   status: number;
 }
 
-function syllabify(word:string) {
-  
-}
-
 export default function Home() {
   const stressSigns = ["","̀","́","̃"];
 
   // Search input handler
   const [searchInput, setSearchInput] = useState<string>("");
+  const [validInput, setValidInput] = useState<boolean>(true);
+  const [savedInput, setSavedInput] = useState<string>("");
 
   // "show more" functionality
   const [showMoreButtons, setShowMoreButtons] = useState<boolean[]>([]);
@@ -47,7 +53,7 @@ export default function Home() {
 
   // Fetched results and related data
   const [totalResults, setTotalResults] = useState<number>(0);
-  const [searchResults, setSearchResults] = useState<JsonResponse>({ in: "", end: "", co: [], res: [] });
+  const [searchResults, setSearchResults] = useState<JsonResponse>({ in: "", va: [], rv: [], end: "", co: [], res: [] });
 
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false);
@@ -60,10 +66,14 @@ export default function Home() {
   const queryWord = queryParamDecoded.substring(0 , queryParamDecoded.indexOf(','))
 
   useEffect(() => {
+    setValidInput( Boolean(searchInput === "" || searchInput.match(/^[a-pr-vyza-pr-vyząčęėįšųūžĄČĘĖĮŠŲŪŽ]*$/i)) );
+  }, [searchInput])
+
+  useEffect(() => {
     if(queryWord != null) {
       setSearchInput(queryWord);
     }
-  }, [])
+  }, []) // eslint-disable-line
 
   const handleSearch = async (e:any) => {
     e.preventDefault();
@@ -73,6 +83,10 @@ export default function Home() {
 
     setIsLoading(true);
 
+    setSearchResults({ in: "", va: [], rv: [], end: "", co: [], res: [] });
+    setShowMoreButtons([]);
+    setSavedInput(searchInput);
+
     fetch(`http://192.168.10.127:8081/api/search/aso/${searchInput}`)
     .then((response) => {
       if (!response.ok) {
@@ -80,7 +94,7 @@ export default function Home() {
       }
       return response.json();
     })
-      .then((data: JsonResponse) => {       
+      .then((data: JsonResponse) => {
         setSearchResults(data);
         setNextPageList(Array.from({ length: data.co.length }, () => 2))
         setShowMoreButtons(data.co.map((group : CountModel) => group.rc >= 100))
@@ -89,13 +103,16 @@ export default function Home() {
           sum = sum + el.rc
         });
         setTotalResults(sum)
+        console.log(data)
+        console.log(data.in)
         
         router.push("/?q=" + Base64.encode(searchInput + ',' + data.in + ','  + data.end));
       })
       .catch((error) => {
-        error.then((errorData: ErrorMessage) => {
-          if(errorData.message === "no records") {
-            console.log("error catched")
+        error.then((errorData: SuggestionResponse) => {
+          if(errorData.vowelAt?.length > 0) {
+            // console.log("error catched")
+            console.log(errorData)
           } else {
             console.log("ERROR not catched")
             console.error(errorData);
@@ -136,6 +153,10 @@ export default function Home() {
     }
   };
 
+  const handleSwitchStress = (index:number) => {
+    console.log("Success " + index + "!!!")
+  };
+
   const handleChange = (e: any) => {
       setSearchInput(e.target.value);
   };
@@ -146,22 +167,34 @@ export default function Home() {
         <RimuokLogo />
       </header>
       <main>
-        <form onSubmit={handleSearch}>
+        <form className="r_center_form" onSubmit={handleSearch}>
+
           <div className="search_bar">
             <input 
-              className="form-control form-control-lg r_font"
+              className={`form-control form-control-lg r_font ${!validInput ? "is-invalid" : ""}`}
               type="text"
               value={searchInput}
               onChange={handleChange}
               placeholder="įveskite žodį"
               id="search"
             />
+            <div 
+              className="invalid-feedback r_outline"
+              style={{ display: (!validInput ? "block" : "none") }}
+            >Įveskite žodį lietuviškomis raidėmis be tarpų
+            </div>
           </div>
+
           <div>
-            <button type="submit" className="btn btn-light">
+            <button 
+            type="submit" 
+            className="btn btn-light"
+            disabled={searchInput.length < 1 ? true : false}
+            >
               <Image src="/search_icon.svg" width="32" height="32" alt="Paieška" />
             </button>
           </div>
+
         </form>
 
         <div className="r_devider">
@@ -176,6 +209,28 @@ export default function Home() {
         (<></>) : (
         <div className="r_card">
           <div className="r_card_body">
+
+            {/* <form  onSubmit={handleSwitchStress}> */}
+              <table className="r_center_form"> 
+                <tbody>
+                  <tr className="r_pick_a_letter">
+                    {savedInput.split('').map((letter, index) => (
+                      <td key={index}>
+                        {!searchResults.va.includes(index) ? 
+                        <span>{letter}</span>
+                        :
+                        searchResults.rv[searchResults.va.indexOf(index)] === searchResults.in ?
+                        <b>{letter}</b>
+                        :
+                        <u onClick={() => handleSwitchStress(index)} style={{cursor:"pointer"}}>{letter}</u>
+                        }
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            {/* </form> */}
+
             <h6 className="card-subtitle mb-2 text-muted">rasta {totalResults} žodžių</h6>
 
             {searchResults.res?.map((syllableGroup, index) => (

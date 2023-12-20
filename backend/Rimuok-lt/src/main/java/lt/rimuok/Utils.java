@@ -180,13 +180,13 @@ public class Utils {
     public static String[] wideIndexing(final String word) {
         switch (word) {
             case "ai" :
-                return new String[]{"Ai","I"};
+                return new String[]{"A","I"};
             case "au" :
-                return new String[]{"Au","U"};
+                return new String[]{"A","U"};
             case "ei" :
-                return new String[]{"Ei","I"};
+                return new String[]{"E","I"};
             case "eu" :
-                return new String[]{"Eu","U"};
+                return new String[]{"E","U"};
             case "ia", "ią":
                 return new String[]{"Ia","A"};
             case "ie":
@@ -194,23 +194,23 @@ public class Utils {
             case "io":
                 return new String[]{"Io","O"};
             case "oi" :
-                return new String[]{"Oi","I"};
+                return new String[]{"O","I"};
             case "ou" :
-                return new String[]{"Ou","U"};
+                return new String[]{"O","U"};
             case "uo" :
                 return new String[]{"Uo","O"};
             case "ui":
-                return new String[]{"Ui","I"};
+                return new String[]{"U","I"};
             case "iu", "ių", "iū":
                 return new String[]{"Iu","U"};
             case "iui":
-                return new String[]{"Iu","Ui","I"};
+                return new String[]{"Iu","U","I"};
             case "iuo":
                 return new String[]{"Io","Uo","O"};
             case "iai":
-                return new String[]{"Ia","Ai","I"};
+                return new String[]{"Ia","A","I"};
             case "iau":
-                return new String[]{"Ia","Au","U"};
+                return new String[]{"Ia","A","U"};
         }
         return new String[]{};
     }

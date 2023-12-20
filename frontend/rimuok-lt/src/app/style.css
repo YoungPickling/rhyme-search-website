@@ -2,6 +2,13 @@
   font-family: "Patrick Hand", "Patrick Hand SC", sans-serif;
  } */
 
+ :root {
+  --background: #8a2be2;
+  --stress_letter: #47e990;
+  --card_font: #000;
+  --card_font_dimmed: #000;
+}
+
 html {
   /* So that the scrollbar doesn't shift the webpage*/
   overflow-y: scroll; 
@@ -13,7 +20,7 @@ html, body {
 }
 
 body {
-  background-color:#8a2be2;
+  background-color: var(--background);
 }
 
 .r_container {
@@ -61,7 +68,7 @@ main {
   justify-content: center
 }
 
-main form {
+.r_center_form {
   max-width: 100vw;
   min-width: 0;
   display: flex;
@@ -85,8 +92,28 @@ footer {
   justify-content: center */
 }
 
-footer p, .r_loading h2, .r_rhyme_box div b {
+footer p, 
+.r_loading h2, 
+.r_rhyme_box div b {
   color: #ff9;
+}
+
+.r_outline,
+.r_pick_a_letter td b,
+.r_loading h2, 
+.r_rhyme_box div b {
+  text-shadow: 
+  0.02em 0.02em #000,
+  -0.02em 0.02em #000,
+  0.02em -0.02em #000,
+  -0.02em -0.02em #000,
+  0px 0.02em #000,
+  0px -0.02em #000,
+  0.02em 0px #000,
+  -0.02em 0px #000;
+}
+
+footer p {
   text-shadow: 1px 1px #000,
   -1px 1px #000,
   1px -1px #000,
@@ -95,6 +122,14 @@ footer p, .r_loading h2, .r_rhyme_box div b {
   0px -1px #000,
   1px 0px #000,
   -1px 0px #000;
+}
+
+.r_pick_a_letter {
+  font-size: 3em !important;
+}
+
+.r_pick_a_letter td b {
+  color:var(--stress_letter); /* #43d6a9 */ 
 }
 
 @keyframes logoAnim {
@@ -142,7 +177,7 @@ footer p, .r_loading h2, .r_rhyme_box div b {
   max-width: 99vw;
   min-width: 0;
   margin: 0 auto;
-  color: rgba(33, 37, 41);
+  color: #000 ;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
@@ -171,7 +206,7 @@ footer p, .r_loading h2, .r_rhyme_box div b {
 }
 
 .r_rhyme_box div b {
-  color: #b274ec;
+  color: var(--stress_letter);
 }
 
 .r_rhyme_box_devider {
