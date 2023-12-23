@@ -48,6 +48,26 @@ public class SearchService {
                 Utils.groupBySyllable(results));
     }
 
+    public InitialInfoModel searchAssonanceByIndex(final String word, final String index) {
+        if (!index.matches(vowelValidationRegex) || !word.matches(validationRegex))
+            throw new InputValidationException("invalid characters found");
+
+        List<SyllableCountModel> resultCount;
+        try {
+            resultCount = searchRepository.syllableCountTable(index, null);
+        } catch(EmptyResultDataAccessException e) {
+            throw new EmptyRhymeIndexException("no results found", word);
+        }
+
+        List<WordModel> results = searchRepository.searchAssonance(index);
+        return new InitialInfoModel(index,
+                Utils.getVowelIndexes(word),
+                Utils.getAllRhymeIndexes(Utils.extractVowelGroups(word)),
+                Utils.getEnding(word),
+                resultCount,
+                Utils.groupBySyllable(results));
+    }
+
     public List<WordModel> searchAssonancePage(final String index, final int syllableCount, final int page) {
         if (!index.matches(vowelValidationRegex))
             throw new InputValidationException("invalid characters found");
@@ -180,18 +200,4 @@ public class SearchService {
 
         return searchRepository.filteredEndingPage(index, partOfSpeech, ending, syllableCount, from, to);
     }
-    // These methods below are for those cases when the initial word searched word wasn't in the dictionary:
-//    public List<AssonanceSearchModel> searchAssonanceByIndex(final String rhymeIndex) {
-//        if (!rhymeIndex.matches(validationRegex))
-//            throw new InputValidationException("invalid characters found");
-//
-//        return searchRepository.searchAssonance(rhymeIndex);
-//    }
-
-//    public List<AssonanceSearchModel> searchAssonanceWithEndingByIndex(final String rhymeIndex, final String ending) {
-//        if (!rhymeIndex.matches(validationRegex) || !ending.matches(validationRegex))
-//            throw new InputValidationException("invalid characters found");
-//
-//        return searchRepository.searchEnding(rhymeIndex, ending.length(), ending);
-//    }
 }

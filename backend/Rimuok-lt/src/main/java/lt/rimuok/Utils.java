@@ -27,7 +27,7 @@ public class Utils {
                 startIndex = lastVowelIndex;
             } else {
                 // Otherwise, start from the letter after the last consonant
-                startIndex = lastConsonantIndex + 1;
+                startIndex = lastConsonantIndex; // + 1;
             }
 
             // Return the substring from the calculated starting index to the end of the word

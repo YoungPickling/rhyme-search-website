@@ -113,6 +113,7 @@ footer p,
   -0.02em 0px #000;
 }
 
+.r_fat_outline,
 footer p {
   text-shadow: 1px 1px #000,
   -1px 1px #000,
@@ -122,6 +123,10 @@ footer p {
   0px -1px #000,
   1px 0px #000,
   -1px 0px #000;
+}
+
+.r_fat_outline {
+  font-size: 1.1em;
 }
 
 .r_pick_a_letter {
