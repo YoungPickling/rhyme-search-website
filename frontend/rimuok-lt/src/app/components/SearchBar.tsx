@@ -118,7 +118,7 @@ export default function SearchBar() {
             id="search"
           />
           <div 
-            className="invalid-feedback ra_fat_outline"
+            className="invalid-feedback r_fat_outline"
             // style={{ display: (!validInput ? "block" : "none") }}
           >Įveskite žodį lietuviškomis raidėmis be tarpų
           </div>

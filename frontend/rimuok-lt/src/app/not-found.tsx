@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchBar from '@/components/SearchBar'
+import SearchBar from './components/SearchBar'
 import Link from 'next/link'
 
 export default function NotFoundPage() {

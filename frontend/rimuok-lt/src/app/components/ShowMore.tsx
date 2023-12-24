@@ -1,10 +1,11 @@
 "use client"
-import React, { useState } from 'react'
-import { JsonResponse, WordModel, stressSigns } from '@/app/page';
+import React, { useState, useEffect } from 'react'
+import { WordModel, stressSigns } from '@/app/page';
+import { usePathname, useSearchParams } from 'next/navigation'
+import dynamic from 'next/dynamic'
+// import { useRouter } from 'next/navigation';
 
 export default function ShowMore({ params }: { params: { syllableGroup: WordModel[], rhymeIndex: string, syllableCount: number, totalWordCount: number }}) {
-  // const [list, setList] = useState<WordModel[]>(syllableGroup);
-  // console.log('syllableGroup:', params.syllableGroup);
   const [list, setList] = useState<WordModel[]>(params.syllableGroup);
 
   const [wordCount, setWordCount] = useState<number>(params.totalWordCount);

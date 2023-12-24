@@ -50,6 +50,11 @@ public class DictionaryController {
         return searchService.searchAssonanceByIndex(word.toLowerCase(), index);
     }
 
+//    @GetMapping("/asopage/{word}")
+//    public InitialInfoModel getPagesAssonanceRhyme(@PathVariable String word) {
+//        return searchService.searchAssonance(word.toLowerCase());
+//    }
+
     @GetMapping("/aso/{index}/{syllables}/{page}")
     public List<WordModel> getAssonancePage(@PathVariable String index, @PathVariable int syllables, @PathVariable int page) {
         return searchService.searchAssonancePage(index, syllables, page);
