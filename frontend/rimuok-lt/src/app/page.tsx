@@ -1,6 +1,8 @@
 import Link from "next/link";
 import SearchBar from "./components/SearchBar";
 import ShowMore from "@/app/components/ShowMore";
+import type { Metadata } from "next"
+import { SITE_BASE_URL, API_BASE_URL } from "./config"
 
 export type CountModel = {
   sc: number;
@@ -42,7 +44,32 @@ interface SearchPageProps {
     }
 }
 
-export const stressSigns = ["","̀","́","̃"];
+export async function generateMetadata(
+  {searchParams}: SearchPageProps
+) : Promise<Metadata> {
+  let titleName: string;
+  let urlName: string;
+  if(searchParams.q === undefined) {
+    titleName = "Rimuok.lt - išplėstinė rimų paieškos svetainė";
+    urlName = `${SITE_BASE_URL}/api/og`;
+  } else {
+    titleName = `${searchParams.q} | Rimuok.lt rimų paieška`;
+    urlName = `${SITE_BASE_URL}/api/og?${new URLSearchParams({q: searchParams.q})}`;
+  }
+
+  return {
+    title: titleName,
+    openGraph: {
+      title: titleName,
+      images: {
+        url: urlName,
+        width: 1200,
+        height: 630,
+        alt: titleName
+      }
+    },
+  };
+}
 
 export default async function Home({searchParams}: SearchPageProps) {
   const queryParam = searchParams.q;
@@ -61,7 +88,7 @@ export default async function Home({searchParams}: SearchPageProps) {
   let showSuggestion = false;
 
   if(queryParam !== undefined && (indexParam === undefined || endParam === undefined)) {
-    await fetch(`http://192.168.10.127:8081/api/search/aso/${searchParams.q}`)
+    await fetch(`${API_BASE_URL}/api/search/aso/${searchParams.q}`)
     .then((response) => {
       if (!response.ok) {
         throw response.json();
@@ -94,7 +121,7 @@ export default async function Home({searchParams}: SearchPageProps) {
     })
   } else if(queryParam !== undefined && indexParam !== undefined && endParam !== undefined) {
 
-    await fetch(`http://192.168.10.127:8081/api/search/asop/${queryParam}/${indexParam}`)
+    await fetch(`${API_BASE_URL}/api/search/asop/${queryParam}/${indexParam}`)
     .then((response) => {
       if (!response.ok) {
         throw response.json();

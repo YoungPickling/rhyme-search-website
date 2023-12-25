@@ -1,9 +1,9 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { WordModel, stressSigns } from '@/app/page';
-import { usePathname, useSearchParams } from 'next/navigation'
-import dynamic from 'next/dynamic'
-// import { useRouter } from 'next/navigation';
+import { WordModel } from '@/app/page';
+import { API_BASE_URL } from '../config';
+
+const stressSigns = ["","̀","́","̃"];
 
 export default function ShowMore({ params }: { params: { syllableGroup: WordModel[], rhymeIndex: string, syllableCount: number, totalWordCount: number }}) {
   const [list, setList] = useState<WordModel[]>(params.syllableGroup);
@@ -14,7 +14,7 @@ export default function ShowMore({ params }: { params: { syllableGroup: WordMode
 
   const handleShowMoreButton = async () => {
     try {
-      const response = await fetch(`http://192.168.10.127:8081/api/search/aso/${params.rhymeIndex}/${params.syllableCount}/${nextPage}`);
+      const response = await fetch(`${API_BASE_URL}/api/search/aso/${params.rhymeIndex}/${params.syllableCount}/${nextPage}`);
       const data: WordModel[] = await response.json();
   
       setShowButton(wordCount - 100 >= 100); // searchResults.co[innerIndex].rc
