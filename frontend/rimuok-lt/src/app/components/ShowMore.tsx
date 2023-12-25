@@ -1,11 +1,23 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { WordModel } from '@/app/page';
 import { API_BASE_URL } from '../config';
 
 const stressSigns = ["","̀","́","̃"];
 
-export default function ShowMore({ params }: { params: { syllableGroup: WordModel[], rhymeIndex: string, syllableCount: number, totalWordCount: number }}) {
+export default function ShowMore(
+  { params }: { 
+    params: { 
+      syllableGroup: WordModel[], 
+      rhymeIndex: string, 
+      syllableCount: number, 
+      totalWordCount: number, 
+      rhymeType: string, 
+      ending: string,
+      pfs: number | undefined
+    }
+  }
+  ) {
   const [list, setList] = useState<WordModel[]>(params.syllableGroup);
 
   const [wordCount, setWordCount] = useState<number>(params.totalWordCount);
@@ -14,7 +26,18 @@ export default function ShowMore({ params }: { params: { syllableGroup: WordMode
 
   const handleShowMoreButton = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/search/aso/${params.rhymeIndex}/${params.syllableCount}/${nextPage}`);
+      const fetchURL = params.pfs === undefined || params.pfs > 13 || params.pfs < 1 ?
+      params.ending === "aso" ?
+      `${API_BASE_URL}/api/search/aso/${params.rhymeIndex}/${params.syllableCount}/${nextPage}` :
+      `${API_BASE_URL}/api/search/end/${params.rhymeIndex}/${params.ending === `` ? `` : `${params.ending}` }/${params.syllableCount}/${nextPage}`
+      : 
+      params.ending === "aso" ?
+      `${API_BASE_URL}/api/search/asof/${params.rhymeIndex}/${params.pfs}/${params.syllableCount}/${nextPage}` :
+      `${API_BASE_URL}/api/search/endf/${params.rhymeIndex}/${params.pfs}/${params.ending === `` ? `` : `${params.ending}` }/${params.syllableCount}/${nextPage}`
+
+      // console.log("next page" + fetchURL)
+
+      const response = await fetch(fetchURL);
       const data: WordModel[] = await response.json();
   
       setShowButton(wordCount - 100 >= 100); // searchResults.co[innerIndex].rc

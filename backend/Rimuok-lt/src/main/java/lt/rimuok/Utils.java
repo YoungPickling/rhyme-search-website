@@ -1,5 +1,6 @@
 package lt.rimuok;
 
+import lt.rimuok.model.SyllableCountModel;
 import lt.rimuok.model.WordModel;
 
 import java.util.ArrayList;
@@ -80,6 +81,26 @@ public class Utils {
 
         // Convert the map values (lists) to a list of lists
         return groupedBySyllable.values().stream().collect(Collectors.toList());
+    }
+
+    public static List<SyllableCountModel> convertToSyllableCountList(final List<List<WordModel>> listOfLists) {
+        return listOfLists.stream()
+                .map(Utils::convertToSyllableCountModel)
+                .collect(Collectors.toList());
+    }
+
+    private static SyllableCountModel convertToSyllableCountModel(final List<WordModel> wordModels) {
+        // Calculate syllable count of the first WordModel object in the list
+        int syllableCount = wordModels.isEmpty() ? 0 : wordModels.get(0).getSyllable();
+
+        // Get the number of objects in the WordModel object List
+        int rowCount = wordModels.size();
+
+        // Create and return a SyllableCountModel
+        return SyllableCountModel.builder()
+                .syllablesCount(syllableCount)
+                .rowCount(rowCount)
+                .build();
     }
 
     public static String[] extractVowelGroups(final String word) {
