@@ -1,6 +1,6 @@
 import Link from "next/link";
 import SearchBar from "./components/SearchBar";
-import ShowMore from "@/app/components/ShowMore";
+import ShowMore from "./components/ShowMore";
 import type { Metadata } from "next"
 import { SITE_BASE_URL, API_BASE_URL } from "./config"
 import Filters from "./components/Filters";
@@ -279,7 +279,7 @@ export default async function Home({searchParams}: SearchPageProps) {
                       syllableCount: syllableGroup[0].sy as number,
                       totalWordCount: (searchResults as JsonResponse).co[index]?.rc as number,
                       rhymeType: rhymeTypeParam,
-                      ending: endParam,
+                      ending: (searchResults as JsonResponse).end,
                       pfs: searchParams.pfs,
                     }}
                   />

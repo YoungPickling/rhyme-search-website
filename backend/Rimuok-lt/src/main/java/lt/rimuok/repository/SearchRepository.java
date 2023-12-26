@@ -32,7 +32,7 @@ public class SearchRepository {
 
     public List<SyllableCountModel> syllableCountTable(final String rhymeIndex, final String ending, final int partOfSpeech) { // AND RIGHT(zodis, ?) LIKE ?
         return jdbcTemplate.query(
-                "SELECT DISTINCT ON (skiemenu_k) skiemenu_k, COUNT(*) OVER (PARTITION BY skiemenu_k) AS row_count FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? " + (ending == null ? "" : "AND RIGHT(zodis, '" + ending.length() + "') LIKE '" + ending + "'") + (partOfSpeech == 0 ? "" : " AND kalbos_dalies_id = " + partOfSpeech) +" ORDER BY skiemenu_k, row_count",
+                "WITH list AS (SELECT DISTINCT ON (zodis, skiemenu_k) skiemenu_k FROM zodziai_kalbos_dalys_morfologija AS m INNER JOIN zodziai USING(zodzio_id) WHERE m.rhyme_index LIKE ? " + (ending == null ? "" : "AND RIGHT(zodis, '" + ending.length() + "') LIKE '" + ending + "'") + (partOfSpeech == 0 ? "" : " AND kalbos_dalies_id = " + partOfSpeech) +" ORDER BY zodis, skiemenu_k) SELECT skiemenu_k, COUNT(*) AS row_count FROM list GROUP BY skiemenu_k",
                 (resultSet, rowNum) ->
                     new SyllableCountModel(resultSet.getInt("skiemenu_k"), resultSet.getInt("row_count")),
                 "%" + rhymeIndex);

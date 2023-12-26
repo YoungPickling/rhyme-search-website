@@ -129,8 +129,6 @@ export default function Filters({searchParams}: SearchPageProps) {
               >
                 Pagal nutylėjimą
             </button>
-            {/* <p>{selectedRhymeType}</p>
-            <p>{selectedPartOfSpeech}</p> */}
         </div>
       </>
       )}
