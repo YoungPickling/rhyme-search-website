@@ -52,7 +52,7 @@ export default function RootLayout({
             {children}
           </main>
           <footer>
-            <p>© 2023 visos teisės saugomos</p>
+            <p>Maksim Pavlenko © { new Date().getFullYear() === 2023 ? "2023" : `2023-${new Date().getFullYear()}`} visos teisės saugomos</p>
           </footer>
         </div>
       </body>
