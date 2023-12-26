@@ -1,9 +1,6 @@
 package lt.rimuok.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lt.rimuok.Utils;
 
 import java.util.List;

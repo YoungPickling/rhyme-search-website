@@ -1,5 +1,6 @@
 package lt.rimuok;
 
+import lt.rimuok.model.SyllableCountModel;
 import lt.rimuok.model.WordModel;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Utils {
                 startIndex = lastVowelIndex;
             } else {
                 // Otherwise, start from the letter after the last consonant
-                startIndex = lastConsonantIndex + 1;
+                startIndex = lastConsonantIndex; // + 1;
             }
 
             // Return the substring from the calculated starting index to the end of the word
@@ -80,6 +81,26 @@ public class Utils {
 
         // Convert the map values (lists) to a list of lists
         return groupedBySyllable.values().stream().collect(Collectors.toList());
+    }
+
+    public static List<SyllableCountModel> convertToSyllableCountList(final List<List<WordModel>> listOfLists) {
+        return listOfLists.stream()
+                .map(Utils::convertToSyllableCountModel)
+                .collect(Collectors.toList());
+    }
+
+    private static SyllableCountModel convertToSyllableCountModel(final List<WordModel> wordModels) {
+        // Calculate syllable count of the first WordModel object in the list
+        int syllableCount = wordModels.isEmpty() ? 0 : wordModels.get(0).getSyllable();
+
+        // Get the number of objects in the WordModel object List
+        int rowCount = wordModels.size();
+
+        // Create and return a SyllableCountModel
+        return SyllableCountModel.builder()
+                .syllablesCount(syllableCount)
+                .rowCount(rowCount)
+                .build();
     }
 
     public static String[] extractVowelGroups(final String word) {
@@ -180,13 +201,13 @@ public class Utils {
     public static String[] wideIndexing(final String word) {
         switch (word) {
             case "ai" :
-                return new String[]{"Ai","I"};
+                return new String[]{"A","I"};
             case "au" :
-                return new String[]{"Au","U"};
+                return new String[]{"A","U"};
             case "ei" :
-                return new String[]{"Ei","I"};
+                return new String[]{"E","I"};
             case "eu" :
-                return new String[]{"Eu","U"};
+                return new String[]{"E","U"};
             case "ia", "ią":
                 return new String[]{"Ia","A"};
             case "ie":
@@ -194,23 +215,23 @@ public class Utils {
             case "io":
                 return new String[]{"Io","O"};
             case "oi" :
-                return new String[]{"Oi","I"};
+                return new String[]{"O","I"};
             case "ou" :
-                return new String[]{"Ou","U"};
+                return new String[]{"O","U"};
             case "uo" :
                 return new String[]{"Uo","O"};
             case "ui":
-                return new String[]{"Ui","I"};
+                return new String[]{"U","I"};
             case "iu", "ių", "iū":
                 return new String[]{"Iu","U"};
             case "iui":
-                return new String[]{"Iu","Ui","I"};
+                return new String[]{"Iu","U","I"};
             case "iuo":
                 return new String[]{"Io","Uo","O"};
             case "iai":
-                return new String[]{"Ia","Ai","I"};
+                return new String[]{"Ia","A","I"};
             case "iau":
-                return new String[]{"Ia","Au","U"};
+                return new String[]{"Ia","A","U"};
         }
         return new String[]{};
     }

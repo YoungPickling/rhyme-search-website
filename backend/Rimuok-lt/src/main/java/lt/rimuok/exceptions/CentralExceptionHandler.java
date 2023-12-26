@@ -30,7 +30,7 @@ public class CentralExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EmptyRhymeIndexException.class)
     public ResponseEntity<Object> handleRhymeIndexNotFound(final EmptyRhymeIndexException exception, final WebRequest request) {
-        HttpStatus status = HttpStatus.PRECONDITION_FAILED; // Error 412
+        HttpStatus status = HttpStatus.OK; // status 200
 
         return handleExceptionInternal(
                 exception,
