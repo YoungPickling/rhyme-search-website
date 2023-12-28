@@ -34,7 +34,7 @@ import java.util.List;
  * @author Maksim Pavlenko
  */
 
-@CrossOrigin(origins = {"http://192.168.10.127:3000"}) // , maxAge = 3600
+@CrossOrigin(origins = {/*"http://192.168.10.127:3000"*/"http://localhost"}) // , maxAge = 3600
 @RestController 
 @RequestMapping("/api/search")
 @RequiredArgsConstructor

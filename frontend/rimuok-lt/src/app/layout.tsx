@@ -43,7 +43,7 @@ export default function RootLayout({
         src="./logoScript.js" 
         strategy="afterInteractive"
         />
-      <body className={patrickHand.className}>
+      <body className={patrickHand.className} style={{backgroundColor:"#8a2be2"}}>
         <div className="r_container">
           <header>
             <RimuokLogo />

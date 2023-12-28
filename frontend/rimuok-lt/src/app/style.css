@@ -3,7 +3,7 @@
  } */
 
  :root {
-  --background: #8a2be2;
+  --r_background: #8a2be2;
   --stress_letter: #47e990;
   --card_font: #000;
   --card_font_dimmed: #000;
@@ -20,7 +20,7 @@ html, body {
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--r_background);
 }
 
 .r_container {

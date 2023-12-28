@@ -1,0 +1,5 @@
+# rimuok.lt
+# 2023-12-28
+
+User-agent: *
+Disallow:
