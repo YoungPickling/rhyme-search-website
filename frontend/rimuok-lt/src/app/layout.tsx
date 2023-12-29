@@ -4,16 +4,18 @@ import { patrickHand } from "./font";
 import Script from "next/script";
 import "./bootstrap.css"
 import "./style.css"
+import { SITE_BASE_URL } from "./config";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('http://192.168.10.127:3000'),
+  metadataBase: new URL(SITE_BASE_URL),
   title: "Rimuok.lt - rimų paieškos svetainė",
   description: "Lietuviškų rimų žodinas su išplėstinė paieška, skirta muzikantams, poetams ir ne tik.",
   openGraph: {
     title: "Rimuok.lt - rimų paieškos svetainė",
     description: "Rimu paieškos sistema su išplėstinė paieška, skirta muzikantams, poetams ir ne tik.",
+    locale: "lt_LT",
     images: {
-      url: "http://192.168.10.127:3000/api/og",
+      url: `${SITE_BASE_URL}/api/og`,
       width: 1200,
       height: 630,
       alt: "Rimuok.lt žodžių paieška"
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
     description: "Rimu paieškos sistema su išplėstinė paieška, skirta muzikantams, poetams ir ne tik.",
     creator: '@Neeemax',
     images: {
-      url: 'http://192.168.10.127:3000/api/og',
+      url: `${SITE_BASE_URL}/api/og`,
       alt: 'Rimuok.lt žodžių paieška',
     }
   },
