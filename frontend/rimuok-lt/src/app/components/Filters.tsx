@@ -4,8 +4,6 @@ import Link from "next/link";
 import { patrickHand } from "../font";
 import { SearchPageProps } from "../page";
 
-//export default function Filters({ params }: { params: { searchParams: SearchPageProps /*partOfSpeech: number, rhymeType: string*/}}) {
-
 export default function Filters({searchParams}: SearchPageProps) {
   const queryParam = searchParams.q;
   const indexParam = searchParams.index;
@@ -34,7 +32,7 @@ export default function Filters({searchParams}: SearchPageProps) {
 
   return (
     <>
-    <button onClick={handleShowFilters} className="r_filter_button" >filtrai { showFilters ? "▲" : "▼"}</button>
+    <button onClick={handleShowFilters} className="r_filter_button">filtrai { showFilters ? "▲" : "▼"}</button>
     
     { !showFilters ? 
       (<></>) : (
@@ -98,40 +96,32 @@ export default function Filters({searchParams}: SearchPageProps) {
         <div className="r_filterbox">
 
           <Link prefetch={false} passHref={true}
-            // href="/"
-            // href={`/?${new URLSearchParams({
-            //   q: queryParam as string,
-            //   index: indexParam as string,
-            //   end: endParam as string,
-            //   pfs: selectedPartOfSpeech ,
-            //   type: selectedRhymeType,
-            // })}`}
             href={`/?${queryParam === undefined ? `` : "q=" + encodeURIComponent(queryParam)}` + 
               `${indexParam === undefined ? `` : "&index=" + encodeURIComponent(indexParam)}` +
               `${endParam === undefined ? `` : "&end=" + encodeURIComponent(endParam)}` +
               `${selectedPartOfSpeech === "0" ? `` : "&pfs=" + encodeURIComponent(selectedPartOfSpeech)}` +
               `&type=${encodeURIComponent(selectedRhymeType)}`}
           >
-            <button 
-              type="button" 
-              className="btn btn-success mb-4"
-              >
-                Taikyti nustatymus
-              </button>
-            </Link>
-
-            <div></div>
-
-            <button 
-              type="button" 
-              className="btn btn-secondary mb-4"
-              onClick={handleSetDefaults}
-              >
-                Pagal nutylėjimą
+          <button 
+            type="button" 
+            className="btn btn-success mb-4"
+            >
+              Taikyti nustatymus
             </button>
+          </Link>
+
+          <div></div>
+
+          <button 
+            type="button" 
+            className="btn btn-secondary mb-4"
+            onClick={handleSetDefaults}
+            >
+              Pagal nutylėjimą
+          </button>
         </div>
       </>
-      )}
+    )}
     </>
   )
 }

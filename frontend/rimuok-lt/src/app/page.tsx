@@ -4,6 +4,7 @@ import ShowMore from "./components/ShowMore";
 import type { Metadata } from "next"
 import { SITE_BASE_URL, API_BASE_URL } from "./config"
 import Filters from "./components/Filters";
+import Cookies from "./components/Cookies";
 
 export type CountModel = {
   sc: number;
@@ -50,6 +51,7 @@ export async function generateMetadata(
 ) : Promise<Metadata> {
   let titleName: string;
   let urlName: string;
+
   if(searchParams.q === undefined) {
     titleName = "Rimuok.lt - išplėstinė rimų paieškos svetainė";
     urlName = `${SITE_BASE_URL}/api/og`;
@@ -172,7 +174,7 @@ export default async function Home({searchParams}: SearchPageProps) {
 
   return (
     <>
-      <SearchBar />
+      <SearchBar key={new Date().getTime()} />
       <div className="r_devider"></div>
       { !searchResults ?  
 
@@ -206,9 +208,9 @@ export default async function Home({searchParams}: SearchPageProps) {
             </tbody>
           </table>
          
-            <div className="r_devider">
-              <p>Kur dėti kirčio ženklą?</p>
-            </div>
+          <div className="r_devider">
+            <p>Kur dėti kirčio ženklą?</p>
+          </div>
 
           </div>
         </div>
