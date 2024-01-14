@@ -36,14 +36,22 @@ export default function DonatePage() {
           Aš esu profesionalus bosistas ir programuotojas. 
           Man dažnai užduoda tokį klausimą - kam tu sukūrei šitą svetainę? 
           Viskas prasidėjo kovido laikais nuo mano kuklių savarankiškų bandymų rašyti dainas. 
-          Ieškodamas kaip užbaigti eilutę juodraštyje, užklydau į keletą rymų paieškos svetainių Anglų ir Rusų kalbomis. 
+          Ieškodamas kaip užbaigti eilutę juodraštyje, užklydau į keletą rimų paieškos svetainių Anglų ir Rusų kalbomis. 
           Dauguma iš jų buvo paprastos, vieni rodė geresnius rezultatus ir turėjo filtrus, kitų dizainas atsilikdavo dvidešimčiai metų.
         </p>
 
         <p>Panašių svetainių Lietuvių kalba beveik nebuvo. 
-          Remiantis ankstesnį patirtį naudojant kitų kalbų rymų žodynus, aš padariau geriausią tokio pobūdžio Lietuvišką svetainę. 
+          Remiantis ankstesnį patirtį naudojant kitų kalbų rimų žodynus, aš padariau geriausią tokio pobūdžio Lietuvišką svetainę. 
           Buvo panaudotos šiolaikines tinklalapio kurimo technologijos ir sukurtas išplestinis paieškos funkcionalas, 
-          leidžiantis pasirinkti pageidaujamą kalbos dalį arba rymavimo rūšį. Tai dave galimybė </p>
+          leidžiantis pasirinkti pageidaujamą kalbos dalį arba rimavimo rūšį. 
+          Tai duoda galimybė netik ieškoti rimus rašant eileraščius, bet ir dainas bei sunkiai rimuotą repą.</p>
+
+        <p>Kas naudos šitą svetainę? Visi smalsus ir atvirų pažiūrų žmonės. 
+          Rimuok.lt yra unikalus instrumentas, padedantis visiemas, kas dirba su rimuotu tekstu.</p>
+
+        <p>Šis projektas pastoviai vystomas ir atnaujinamas. Jeigu jūs turite idėjų arba pasūlymų kaip pagerinti naudotojų patirtį, interfeisą arba funkcionalūmą, galite laisvai susisiekti su manimi nuejus į skiltį <b>Kontaktai</b>.</p>
+
+        <p>Rimuok.lt yra nemokamas rimų paieškos portalas, todėl kviečiame paaukoti projektu </p>
       </article>
     </div>
   )
