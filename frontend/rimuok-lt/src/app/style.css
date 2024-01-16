@@ -348,7 +348,7 @@ details summary::-webkit-details-marker {
 .r_ck_container {
   position: sticky;
   background-color: #000;
-  color: #fff !important;
+  color: #fff;
   font-size: 0.9rem;
   bottom: 10px;
   left: 10px;
@@ -359,6 +359,14 @@ details summary::-webkit-details-marker {
 .r_ck {
   border: 1px solid azure;
   padding: 0.5em;
+  color: #fff;
+}
+
+.r_ck a {
+  color: #ddd;
+}
+
+.r_ck a:hover {
   color: #fff;
 }
 
