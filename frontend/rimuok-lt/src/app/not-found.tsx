@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 export default function NotFoundPage() {
   return (
     <>
-      {/* <SearchBar /> */}
       <div className="r_devider"></div>
       <div className="r_loading">
         <h1>Puslapis nerastas</h1>

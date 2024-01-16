@@ -5,6 +5,8 @@ import type { Metadata } from "next"
 import { SITE_BASE_URL, API_BASE_URL } from "./config"
 import Filters from "./components/Filters";
 import Cookies from "./components/Cookies";
+import ScrollToTop from "./components/ScrollToTop";
+import ThemeButton from "./components/ThemeButton";
 
 export type CountModel = {
   sc: number;
@@ -191,7 +193,7 @@ export default async function Home({searchParams}: SearchPageProps) {
                     {!(suggestion as SuggestionResponse).vowelAt?.includes(i) ? 
                     <span>{letter}</span>
                     :
-                    <u> {/* onClick={() => handleStressPicker(index)} style={{cursor:"pointer"}} */}
+                    <u>
                       <Link scroll={false} 
                         href={`/?${queryParam === undefined ? `` : `q=${encodeURIComponent(queryParam)}` }` + 
                           `&index=${encodeURIComponent((suggestion as SuggestionResponse).indexes[(suggestion as SuggestionResponse).vowelAt.indexOf(i)])}` +
@@ -262,7 +264,7 @@ export default async function Home({searchParams}: SearchPageProps) {
             </div>
           ) : (
             <>
-            <h6 key={uniqueKey + new Date().getTime()} className="card-subtitle mb-2 text-muted">rasta {totalResults} žodžių</h6>
+              <h6 key={uniqueKey + new Date().getTime()} className="r_card_title">rasta {totalResults} žodžių</h6>
 
               {searchResults !== null && (searchResults as JsonResponse).res?.map((syllableGroup, index) => (
                 <div key={index}>
@@ -288,6 +290,8 @@ export default async function Home({searchParams}: SearchPageProps) {
 
                 </div>
               ))}
+              
+              <ScrollToTop />
             </>
           )}
           

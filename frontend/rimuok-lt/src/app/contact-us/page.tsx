@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { SITE_BASE_URL } from "../config";
+import { CONTACT_EMAIL, SITE_BASE_URL } from "../config";
 
 export async function generateMetadata() : Promise<Metadata> {
   const pageName = "Kontaktai";
@@ -32,7 +32,8 @@ export default function DonatePage() {
     <div className="r_card r_article">
       <article className="r_card_body">
         <h1>Kontaktai</h1>
-        <p></p>
+        <p>Jei turite klausimų arba pasiūlymų, susisiekite su mumis el. paštu:</p>
+        <a href="mailto:bigyellowmagic@gmail.com" style={{fontSize:"1.45em"}}>{CONTACT_EMAIL}</a>
       </article>
     </div>
   )

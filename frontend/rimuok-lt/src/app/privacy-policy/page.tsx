@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { SITE_BASE_URL } from "../config";
+import { CONTACT_EMAIL, SITE_BASE_URL } from "../config";
 
 export async function generateMetadata() : Promise<Metadata> {
   const pageName = "Privatumo politika";
@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
 
         <p>Tvarkant asmens duomenys, internetinė svetainė Rimuok.lt remiasi bendruoju duomenų apsaugos reglamentu (BDAR) arba GDPR (angl. General Data Protection Regulation)</p>
 
-        <h1>Kokia informaciją saugojame</h1>
+        <h2>Kokia informaciją saugojame</h2>
 
         <p><b>Svetainė nekaupia jokios lankytojų informacijos apie asmens duomenys. </b> 
           Kaip ir dauguma svetainių, Rimuok.lt renka neasmeniškai identifikuojančią informaciją, 
@@ -53,15 +53,15 @@ export default function PrivacyPolicyPage() {
 
         <p>Tokia informacija laikoma svetainės serveryje neilgiau kaip 2 savaitės.</p>
 
-        <h1>Slapukų nustatymai</h1>
+        <h2>Slapukų nustatymai</h2>
 
         <p>Internetinė svetainė Rimuok.lt (priklausomai nuo lankytojo sutikimo) naudoja tik funkcinius slapukus, 
           leidžiančius išsaugoti pasirinktą svetainės &#34;temą&#34;, pvz. šviesiąją arba tamsiąją. Visos duomenys apie slapukus laikomos tik lankytojo naršyklėje.</p>
         
-        <h1>Susisiekite su mumis</h1>
+        <h2>Susisiekite su mumis</h2>
 
         <p>Jei turite kitų klausimų apie šią privatumo politiką arba mūsų turimą informaciją apie jus, susisiekite su mumis el. paštu:</p>
-        <a href="mailto:info@rimuok.lt" style={{fontSize:"1.45em"}}>info@rimuok.lt</a>
+        <a href="mailto:bigyellowmagic@gmail.com" style={{fontSize:"1.45em"}}>{CONTACT_EMAIL}</a>
       </article>
     </div>
   )

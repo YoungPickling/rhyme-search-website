@@ -51,7 +51,7 @@ export default function DonatePage() {
 
         <p>Šis projektas pastoviai vystomas ir atnaujinamas. Jeigu jūs turite idėjų arba pasūlymų kaip pagerinti naudotojų patirtį, interfeisą arba funkcionalūmą, galite laisvai susisiekti su manimi nuejus į skiltį <b>Kontaktai</b>.</p>
 
-        <p>Rimuok.lt yra nemokamas rimų paieškos portalas, todėl kviečiame paaukoti projektu </p>
+        <p style={{display:"none"}}>Rimuok.lt yra nemokamas rimų paieškos portalas, todėl kviečiame paaukoti projektu.</p>
       </article>
     </div>
   )

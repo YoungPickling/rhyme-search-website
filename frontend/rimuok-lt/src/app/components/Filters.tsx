@@ -106,7 +106,7 @@ export default function Filters({searchParams}: SearchPageProps) {
             type="button" 
             className="btn btn-success mb-4"
             >
-              Taikyti nustatymus
+              Filtruoti
             </button>
           </Link>
 
@@ -117,7 +117,7 @@ export default function Filters({searchParams}: SearchPageProps) {
             className="btn btn-secondary mb-4"
             onClick={handleSetDefaults}
             >
-              Pagal nutylėjimą
+              Atstatyti
           </button>
         </div>
       </>

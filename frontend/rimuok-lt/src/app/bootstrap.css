@@ -12131,11 +12131,6 @@ blockquote {
   border-radius: 15px 27px 25px 25px/25px 25px 305px 635px;
 }
 
-table th,
-table td {
-  background-color: #fff;
-}
-
 .table-bordered {
   overflow: hidden;
   border-spacing: 0;

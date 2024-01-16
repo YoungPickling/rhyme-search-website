@@ -8,6 +8,8 @@ import { SITE_BASE_URL } from "./config";
 // import Head from "next/head";
 import Cookies from "./components/Cookies";
 import Link from "next/link"
+import { getCookie } from "./components/CookieFunctions";
+import ThemeButton from "./components/ThemeButton";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_BASE_URL),
@@ -19,6 +21,10 @@ export const metadata: Metadata = {
   keywords: ["rimai", "žodynas", "asonansas", "galunė", "rimas", "filtras", "rimų paieška", "lithuanian rhymes"],
   icons: {
     icon:[
+      {
+        rel:"shortcut icon",
+        url:"/favicon.ico"
+      },
       {
         url: "/favicon-16.png",
         type: "image/png",
@@ -140,26 +146,27 @@ export default function RootLayout({
         type="text/javascript" 
         strategy="afterInteractive"
         />
-      <body className={patrickHand.className} style={{backgroundColor:"#8a2be2"}}>
+      <body className={patrickHand.className} >
         <div className="r_container">
           <header>
             <RimuokLogo />
           </header>
+          <nav>
+              <Link href="/how-to-use">Kaip naudotis</Link><p> | </p>
+              <Link href="/privacy-policy">Privatumo politika</Link><p> | </p>
+              {/* <Link href="/donate">Paaukoti projektui</Link><p> | </p> */}
+              <Link href="/contact-us">Kontaktai</Link><p> | </p>
+              <Link href="/about-us">Apie mus</Link>
+              <ThemeButton />
+            </nav>
           <main>
             {children}
           </main>
           <footer>
-            <nav>
-              <Link href="/how-to-use">Kaip naudotis</Link><p> | </p>
-              <Link href="/privacy-policy">Privatumo politika</Link><p> | </p>
-              <Link href="/donate">Paaukoti projektui</Link><p> | </p>
-              <Link href="/contact-us">Kontaktai</Link><p> | </p>
-              <Link href="/about-us">Apie mus</Link>
-            </nav>
             <p>© Maksim Pavlenko 2023-{new Date().getFullYear()} visos teisės saugomos</p>
           </footer>
         </div>
-        {/* <Cookies /> */}
+        <Cookies />
       </body>
     </html>
   )
