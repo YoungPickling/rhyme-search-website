@@ -107,7 +107,7 @@ export default function HowToUsePage() {
 
         <ol start={5}>
           <li>
-            <p>Pasirinkus norimus filtrus, paspauskite mygtuką <b>filtruoti</b> 
+            <p>Pasirinkus norimus filtrus, paspauskite mygtuką <b>filtruoti </b> 
             kad atnaujinti paieškos rezultatus. Norint grįžti į pagrindinį puslapį, 
             paspauskite ant <b>Rimuok.lt</b> užrašo puslapio viršuje.</p>
           </li>
