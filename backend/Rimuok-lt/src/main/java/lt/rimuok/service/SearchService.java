@@ -35,7 +35,7 @@ public class SearchService {
             rhymeIndex = searchRepository.getRhymeIndex(word);
             resultCount = searchRepository.syllableCountTable(rhymeIndex, null, 0);
         } catch(EmptyResultDataAccessException e) {
-            throw new EmptyRhymeIndexException("no index found", word);
+                throw new EmptyRhymeIndexException("no index found", word);
         }
 
         rhymeIndex = rhymeIndex.substring(Utils.findLastCapital(rhymeIndex));
