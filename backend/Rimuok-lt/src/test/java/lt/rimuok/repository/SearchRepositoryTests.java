@@ -1,34 +1,36 @@
-package lt.rimuok;
+package lt.rimuok.repository;
 
+import jakarta.activation.DataSource;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lt.rimuok.model.WordModel;
 import lt.rimuok.repository.SearchRepository;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@DataJdbcTest
-//@NoArgsConstructor
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@Transactional
 public class SearchRepositoryTests {
-//    @Autowired
-//    private JdbcTemplate jdbcTemplate;
-//    @Autowired
-//    private SearchRepository searchRepository;
-
-//    @Autowired
-//    public SearchRepositoryTests(JdbcTemplate jdbcTemplate) {
-//        this.jdbcTemplate = jdbcTemplate;
-//    }
+    @Autowired
+    public SearchRepository searchRepository;
 
 //    @Test
 //    public void getRhymeIndexTest() {
@@ -43,6 +45,16 @@ public class SearchRepositoryTests {
 //    }
 
     // TODO tests
+//    @Test
+//    void checkForNullReference_JdbcTemplate() {
+//        assertNotNull(jdbcTemplate);
+//    }
+
+    @Test
+    public void checkForNullReference_SearchRepository() {
+        assertNotNull(searchRepository);
+    }
+
     @Test
     public void testGetRhymeIndex() {
         // Given
@@ -50,11 +62,13 @@ public class SearchRepositoryTests {
         String expectedRhymeIndex = "Ia";
 
         // When
-        SearchRepository searchRepository = new SearchRepository();
         String actualRhymeIndex = searchRepository.getRhymeIndex(word);
 
         // Then
-        assertTrue(expectedRhymeIndex.equals(actualRhymeIndex));
+        assertTrue(
+                expectedRhymeIndex.equals(actualRhymeIndex),
+                "Rhyme index result did not match with the expected one"
+        );
     }
 
 //    @Test

@@ -23,6 +23,8 @@ public class SearchRepository {
 //                BeanPropertyRowMapper.newInstance(SearchModel.class), search);
 //    }
 
+
+
     public String getRhymeIndex(final String word) throws EmptyResultDataAccessException {
         return jdbcTemplate.queryForObject(
                 "SELECT m.rhyme_index FROM zodziai_kalbos_dalys_morfologija AS m JOIN zodziai AS z USING(zodzio_id) WHERE zodis = ? LIMIT 1",
