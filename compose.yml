@@ -1,0 +1,39 @@
+version: '3.8'
+# TODO
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    shm_size: 128mb
+    environment:
+      - POSTGRES_DB=lithuanian
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=maxim23
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    container_name: frontend
+    depends_on:
+      - db
+    volumes:
+      - ./frontend/rimuok-lt:/usr/src/frontend
+
+  backend:
+    ports:
+      - "8081:8081"
+    container_name: backend
+    depends_on:
+      - db
+    build: ./backend
+    volumes:
+      - ./backend/Rimuok-lt:/usr/src/backend
+
+volumes:
+  database:
