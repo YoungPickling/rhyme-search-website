@@ -4,9 +4,9 @@ import ShowMore from "./components/ShowMore";
 import type { Metadata } from "next"
 import { SITE_BASE_URL, API_BASE_URL } from "./config"
 import Filters from "./components/Filters";
-import Cookies from "./components/Cookies";
+// import Cookies from "./components/Cookies";
 import ScrollToTop from "./components/ScrollToTop";
-import ThemeButton from "./components/ThemeButton";
+// import ThemeButton from "./components/ThemeButton";
 
 export type CountModel = {
   sc: number;

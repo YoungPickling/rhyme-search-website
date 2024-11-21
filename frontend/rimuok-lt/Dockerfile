@@ -1,6 +1,7 @@
 FROM node:20.11.1-slim
 
-ENV ENV_API_BASE_URL=http://localhost:8081
+ENV ENV_API_BASE_URL=https://rimuok.pavlenkomaksim.com/api
+ENV ENV_SITE_BASE_URL=https://rimuok.pavlenkomaksim.com
 
 WORKDIR /usr/src
 

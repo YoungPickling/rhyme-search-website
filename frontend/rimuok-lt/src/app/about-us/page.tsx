@@ -32,8 +32,8 @@ export default function DonatePage() {
     <div className="r_card r_article">
       <article className="r_card_body">
         <h1>Apie mus</h1>
-        <p>Sveiki, mano vardas Maksimas Pavlenko. 
-          Aš esu profesionalus bosistas ir programuotojas. 
+        <p>Sveiki, mano vardas Maksim Pavlenko. 
+          Aš esu profesionalus muzikantas ir programuotojas. 
           Man dažnai užduoda tokį klausimą - kam tu sukūrei šitą svetainę? 
           Viskas prasidėjo kovido laikais nuo mano kuklių savarankiškų bandymų rašyti dainas. 
           Ieškodamas kaip užbaigti eilutę juodraštyje, užklydau į keletą rimų paieškos svetainių Anglų ir Rusų kalbomis. 
@@ -42,14 +42,14 @@ export default function DonatePage() {
 
         <p>Panašių svetainių Lietuvių kalba beveik nebuvo. 
           Remiantis ankstesnį patirtį naudojant kitų kalbų rimų žodynus, aš padariau geriausią tokio pobūdžio Lietuvišką svetainę. 
-          Buvo panaudotos šiolaikines tinklalapio kurimo technologijos ir sukurtas išplestinis paieškos funkcionalas, 
+          Buvo panaudotos šiuolaikines tinklalapio kūrimo technologijos ir sukurtas išplėstinis paieškos funkcionalas, 
           leidžiantis pasirinkti pageidaujamą kalbos dalį arba rimavimo rūšį. 
-          Tai duoda galimybė netik ieškoti rimus rašant eileraščius, bet ir dainas bei sunkiai rimuotą repą.</p>
+          Tai duoda galimybė netik ieškoti rimus rašant eilėraščius, bet ir dainas bei sunkiai rimuotą repą.</p>
 
-        <p>Kas naudos šitą svetainę? Visi smalsus ir atvirų pažiūrų žmonės. 
-          Rimuok.lt yra unikalus instrumentas, padedantis visiemas, kas dirba su rimuotu tekstu.</p>
+        <p>Kas naudoja šitą svetainę? Visi smalsus ir atvirų pažiūrų žmonės. 
+          Rimuok.lt yra unikalus instrumentas, padedantis visiems, kas dirba su rimuotu tekstu.</p>
 
-        <p>Šis projektas pastoviai vystomas ir atnaujinamas. Jeigu jūs turite idėjų arba pasūlymų kaip pagerinti naudotojų patirtį, interfeisą arba funkcionalūmą, galite laisvai susisiekti su manimi nuejus į skiltį <b>Kontaktai</b>.</p>
+        <p>Šis projektas pastoviai vystomas ir atnaujinamas. Jeigu jūs turite idėjų arba pasiūlymų kaip pagerinti naudotojų patirtį, interface&apos;ą arba funkcionalumą, galite laisvai susisiekti su manimi nuėjus į skiltį <b>Kontaktai</b>.</p>
 
         <p style={{display:"none"}}>Rimuok.lt yra nemokamas rimų paieškos portalas, todėl kviečiame paaukoti projektu.</p>
       </article>

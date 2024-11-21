@@ -55,10 +55,10 @@ export default function HowToUsePage() {
           <li>
             <p>Jeigu žodis įvestas teisingai, galite iškart gauti atsakymą. 
               Per vidurį didelėmis raidėmis bus parašytas ieškomas žodis. 
-              Spalvotai žymėma kirčiuojama raidė. Pabrauktos balsės raidės - ant jų 
+              Spalvotai žymima kirčiuojama raidė. Pabrauktos balsės raidės - ant jų 
               paspaudus keičiama kirčio vietą. Kirčiuotos raidės keitimas gali užtrukti kelias sekundės.
-              Toliau dešinėje yra migtukas <b>filtrai</b> ir rastų rimų skaičius. 
-              Visi rezultatai rušuojami skiemenu skaičiu tvarka bei abėcėlės tvarka.
+              Toliau dešinėje yra mygtukas <b>filtrai</b> ir rastų rimų skaičius. 
+              Visi rezultatai rūšiuojami skiemenų skaičių tvarka bei abėcėlės tvarka.
             </p>
           </li>
         </ol>
@@ -75,7 +75,7 @@ export default function HowToUsePage() {
         <ol start={3}>
           <li>
             <p>Jeigu žodis įvestas su klaida, galite padėti kirčio ženklą 
-              ant pageidaujamos pabrauktos raidės ir testi paiešką.</p>
+              ant pageidaujamos pabrauktos raidės ir tęsti paiešką.</p>
           </li>
         </ol>
         <div style={{textAlign:"center"}}>
@@ -90,9 +90,9 @@ export default function HowToUsePage() {
 
         <ol start={4}>
           <li>
-            <p>Atidarus skiltį <b>filtrai</b>, galite pasirinkti rimo rušį bei kalbos dalį.</p>
+            <p>Atidarius skiltį <b>filtrai</b>, galite pasirinkti rimo rūšį bei kalbos dalį.</p>
             <p><b>Asonansas</b> - vienodų balsių pasikartojimas</p>
-            <p><b>Galunė</b> - rimai, kur sutampa galunės</p>
+            <p><b>Galūnė</b> - rimai, kur sutampa galūnės</p>
           </li>
         </ol>
         <div style={{textAlign:"center"}}>

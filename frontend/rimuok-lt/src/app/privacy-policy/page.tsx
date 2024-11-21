@@ -48,7 +48,7 @@ export default function PrivacyPolicyPage() {
           Kaip ir dauguma svetainių, Rimuok.lt renka neasmeniškai identifikuojančią informaciją, 
           kurią paprastai pateikia interneto naršyklės užklausos metu, pvz., naršyklės tipą, kalbos pasirinkimą, 
           nukreipiančiąją svetainę, kiekvieno lankytojo užklausos datą, laiką. 
-          Svetainęs tikslas renkant neasmeniškai identifikuojančią informaciją - geriau suprasti, 
+          Svetainės tikslas renkant neasmeniškai identifikuojančią informaciją - geriau suprasti, 
           kiek ir kaip lankytojai naudojasi svetaine bei apsisaugoti nuo ieškančių sistemos spragų interneto robotų ir skanerių.</p>
 
         <p>Tokia informacija laikoma svetainės serveryje neilgiau kaip 2 savaitės.</p>
