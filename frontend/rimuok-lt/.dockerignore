@@ -1,7 +1,10 @@
 # add git-ignore syntax here of things you don't want copied into docker image
 
-.next
-.git
 *Dockerfile*
 *docker-compose*
+.dockerignore
 node_modules
+npm-debug.log
+README.md
+.next
+.git

@@ -61,7 +61,7 @@ export default function PrivacyPolicyPage() {
         <h2>Susisiekite su mumis</h2>
 
         <p>Jei turite kitų klausimų apie šią privatumo politiką arba mūsų turimą informaciją apie jus, susisiekite su mumis el. paštu:</p>
-        <a href="mailto:bigyellowmagic@gmail.com" style={{fontSize:"1.45em"}}>{CONTACT_EMAIL}</a>
+        <a href={"mailto:" + CONTACT_EMAIL} style={{fontSize:"1.45em"}}>{CONTACT_EMAIL}</a>
       </article>
     </div>
   )

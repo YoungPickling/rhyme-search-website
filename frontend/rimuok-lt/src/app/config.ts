@@ -7,6 +7,6 @@
 // export const SITE_BASE_URL = "http://192.168.10.127:3000";
 
 export const API_BASE_URL: string = typeof process.env.ENV_API_BASE_URL === 'string' ? process.env.ENV_API_BASE_URL :"http://localhost:8081";
-export const SITE_BASE_URL = "http://localhost:3000";
+export const SITE_BASE_URL: string = typeof process.env.ENV_API_BASE_URL === 'string' ? process.env.ENV_API_BASE_URL : "http://localhost:3000";
 
 export const CONTACT_EMAIL = "bigyellowmagic@gmail.com";

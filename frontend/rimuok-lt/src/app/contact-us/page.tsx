@@ -33,7 +33,7 @@ export default function DonatePage() {
       <article className="r_card_body">
         <h1>Kontaktai</h1>
         <p>Jei turite klausimų arba pasiūlymų, susisiekite su mumis el. paštu:</p>
-        <a href="mailto:bigyellowmagic@gmail.com" style={{fontSize:"1.45em"}}>{CONTACT_EMAIL}</a>
+        <a href={ "mailto:" + CONTACT_EMAIL } style={{fontSize:"1.45em"}}>{CONTACT_EMAIL}</a>
       </article>
     </div>
   )
