@@ -35,7 +35,7 @@ import java.util.List;
  */
 
 // Development
-@CrossOrigin(origins = {"https://rimuok.lt", "https://www.rimuok.lt", "http://localhost:3000", "http://192.168.10.127:3000"}) // , maxAge = 3600
+@CrossOrigin(origins = {"https://rimuok.pavlenkomaksim.com", "https://rimuok.lt", "https://www.rimuok.lt", "http://localhost:3000", "http://192.168.10.127:3000"}) // , maxAge = 3600
 @RestController 
 @RequestMapping("/api/search")
 @RequiredArgsConstructor

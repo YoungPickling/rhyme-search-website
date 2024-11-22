@@ -8,7 +8,7 @@ import { SITE_BASE_URL } from "./config";
 // import Head from "next/head";
 import Cookies from "./components/Cookies";
 import Link from "next/link"
-import { getCookie } from "./components/CookieFunctions";
+// import { getCookie } from "./components/CookieFunctions";
 import ThemeButton from "./components/ThemeButton";
 
 export const metadata: Metadata = {
