@@ -7,8 +7,8 @@ COPY src ./src
 
 ENV CONFIG_LINK=/app/src/main/resources/application.yaml
 
-RUN sed -i 's/localhost/192.168.10.250/' CONFIG_LINK && \
-    sed -i 's/maxim23/postgres/' CONFIG_LINK && \
+RUN sed -i 's/localhost/192.168.10.250/' "$CONFIG_LINK" && \
+    sed -i 's/maxim23/postgres/' "$CONFIG_LINK" && \
     mvn clean package -DskipTests
 
 RUN rm -rf /root/.m2/repository
