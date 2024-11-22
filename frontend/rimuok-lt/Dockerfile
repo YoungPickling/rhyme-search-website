@@ -108,6 +108,8 @@ WORKDIR /app
 # COPY --from=build /app/rimuok.ico ./rimuok.ico
 COPY --from=build /app .
 
+RUN rm /_next
+
 EXPOSE 3000
 
 CMD ["npm", "start"]
