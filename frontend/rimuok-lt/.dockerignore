@@ -1,7 +1,6 @@
 # add git-ignore syntax here of things you don't want copied into docker image
 
 *Dockerfile*
-*docker-compose*
 .dockerignore
 node_modules
 npm-debug.log
