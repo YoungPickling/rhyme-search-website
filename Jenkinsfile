@@ -35,7 +35,7 @@ pipeline {
     stage('Deploy Back') {
       steps {
         sh """
-          docker run -d --name rimuok-back -p 8083:8081 rimuok-back
+          docker run -d --name rimuok-back -p 8083:8081 --restart=always rimuok-back
         """
       }
     }
@@ -43,7 +43,7 @@ pipeline {
     stage('Deploy Front') {
       steps {
         sh """
-          docker run -d --name rimuok-front -p 8073:3000 rimuok-front
+          docker run -d --name rimuok-front -p 8073:3000 --restart=always rimuok-front
         """
       }
     }
