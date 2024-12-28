@@ -1,5 +1,6 @@
 # Rimuok.lt Frontend Server
 A full-fledged next.js server for a Lithuanian Rhyme Search Engine.
+
 ## Prerequisites
 First, install [nodejs](https://nodejs.org/en/download/).
 From the current directory, install node packages:
