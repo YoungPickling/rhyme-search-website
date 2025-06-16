@@ -13,11 +13,11 @@ RUN sed -i 's/localhost/192.168.10.250/' "$CONFIG_LINK" && \
 
 RUN rm -rf /root/.m2/repository
 
-FROM eclipse-temurin:17-jre-noble AS prod
+FROM eclipse-temurin:17-jre-noble
 
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/*.jar rimuok_lt_backend.jar
 
 EXPOSE 8081
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "rimuok_lt_backend.jar"]
